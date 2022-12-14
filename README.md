@@ -2,6 +2,8 @@
 This is a Angular 13 project, developed with node.js and express with mongo db as database.
 File server is developed and used to upload and read image files and video files.
 
+Image crop facility is done.
+
 
 Admin Login
 ----------------
