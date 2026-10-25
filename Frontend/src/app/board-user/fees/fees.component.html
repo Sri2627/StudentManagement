@@ -1,0 +1,331 @@
+ 
+
+  <div class="container-fluid"style="margin-top: 35px;"  >
+    <div class="row">
+     
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+       
+        <div class="table-responsive">
+          
+            <div class="inner-adjust">
+                           
+      <div class="d-flex justify-content-between">
+        <div>
+          <h2>Fees </h2>
+ 
+        </div>
+        <div>
+    
+          
+        
+            <!-- <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#messages">
+                <i class="fas fa-plus"></i> Add New Exam
+              </button>&nbsp;
+        -->
+         </div>
+    </div>
+         
+    <hr/><!-- table-->
+
+    <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+      <div>
+      <div class="d-flex justify-content-between"> 
+
+      <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+
+      <div>             
+ 
+      </div>
+
+      <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+      <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+      </div>
+      </div>
+
+      <div>
+      <div>
+
+      <div>  
+      </div>        
+      <div class="d-flex justify-content-between">
+      <div><label for="cars">Records per page : &nbsp;</label></div>
+      <div>  <select (change)="onTableSizeChange($event)"> 
+      <option *ngFor="let size of tableSizes"> {{size}}</option>
+      </select></div>  
+
+      </div>
+      </div>  
+      </div>
+      </div>
+
+
+
+
+
+      <div class="data">
+        <div class="d-flex align-content-stretch flex-wrap">
+          <div class="card" style="width: 18rem; margin: 12px;" 
+          *ngFor="let stu of invocies  |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+                
+          <div class="card-header"><h5>{{stu.feeformat}} </h5></div>
+          <div class="card-body"  id="download">
+          
+
+            <h4 class="card-title">  Amount -  {{stu.total}}</h4>  
+            <h6 class="card-text"> Paid :   {{stu.ispaid}}</h6>
+            <div class="card-title"> {{stu.lastdate}} </div>
+          </div>
+          <div class="card-footer">
+            <div class="d-flex justify-content-between">
+              <div>
+                      
+       <button type="button" class="btn btn-success"    data-bs-toggle="modal" data-bs-target="#feedetails" (click)="getcurrentinvoice(stu.id)"     >
+        <i class="fas fa-user"></i> Details
+ </button>&nbsp;
+       
+              </div>
+              <div>
+          
+                
+                <div   *ngIf="stu.ispaid ">
+                  <span class="badge badge-success"> Paid</span>
+
+           
+                 </div>
+                   <div   *ngIf="!stu.ispaid ">
+     
+                     <button  class="btn btn-primary"  (click)="createOrder(stu.id, stu.total)"    >  
+                       <i class="fas fa-user"></i>Pay
+                   </button>  &nbsp; 
+                    
+               </div>
+               
+               </div>
+          </div>
+
+
+      
+          
+            
+
+          </div>
+                
+          </div>
+         
+          </div>
+         
+        
+        
+
+      <div class="d-flex justify-content-between">
+          <div>
+            <h2> </h2>
+          </div>
+          <div>
+    
+             
+                
+      
+           </div>
+        </div>
+           
+      <div>
+
+      </div> 
+
+
+       
+
+
+
+      </div>
+      <pagination-controls
+      previousLabel=" Prev"
+      nextLabel="Next"
+
+      (pageChange)="onTableDataChange($event)"></pagination-controls>
+      <!-- table-->
+             
+
+      
+    
+             
+    <ng-template #loggedOut>
+      Please login.
+    </ng-template>
+            </div>
+        
+    </div>
+
+        
+      
+      </main>
+    
+ 
+          </div>
+        </div>
+
+
+        
+
+<!-- Modal -->
+<div class="modal fade" id="feedetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Fee Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        
+ 
+              
+  
+
+       <div class="container" id="fees">
+
+    
+        <table style="width:100%">
+                           
+          <tr>
+            <td  style="font-family: Arial, Helvetica, sans-serif">  
+              <img  id="currentPhoto" src="{{admindata.photourl}}" onerror="this.onerror=null; this.src='../../assets/noimage.jpg'" alt="" width="120" height="140">
+           </td>
+          <td style="font-family: Arial, Helvetica, sans-serif">  <h2> School Name: {{admindata.fullname}}</h2>  </td>
+          </tr>
+          <tr>
+            <td style="font-family: Arial, Helvetica, sans-serif">      </td>
+            <td>    </td>
+          </tr>
+        </table>
+
+        <table style="width:100%">
+                           
+          <tr>
+            <td   style="font-family: Arial, Helvetica, sans-serif; width: 70%;">  
+              <h5>Invoice :{{currentdata.id }}</h5> 
+               
+            <div   *ngIf="currentdata.ispaid ">
+
+              <h5>Invoice status: <span class="badge badge-success">PAID</span>
+                </h5> 
+             </div>
+             <div  *ngIf="!currentdata.ispaid">
+              <h5>Invoice status:  <span class="badge badge-danger"> NOT PAID</span>
+</h5> 
+             </div>
+              <strong>Lastdate :</strong> {{currentdata.lastdate }}
+           </td>
+          <td style="font-family: Arial, Helvetica, sans-serif">   
+            <h5> Name :{{currentdata.name }}</h5>
+            <h5>Admission No :{{currentdata.admissionno }}</h5> </td>
+          </tr>
+          <tr>
+            <td style="font-family: Arial, Helvetica, sans-serif">      </td>
+            <td>    </td>
+          </tr>
+        </table>
+
+                                
+     
+         <hr/>
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title"><strong  style=" font-family: 'Courier New', Courier, monospace;">  {{currentdata.feeformat }}</strong></h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-condensed" style="width:100%" style=" font-family: 'Courier New', Courier, monospace;" style="border:1px solid black;  border-collapse: collapse;">
+                            <thead>
+                                            <tr>
+                                  <td  style="border:1px solid black;width:35%;font-family: 'Courier New', Courier, monospace;"><strong>Item</strong></td>
+                                  <td style="border:1px solid black;width:35%;font-family: 'Courier New', Courier, monospace;"><strong>Price</strong></td>
+                                  <td style="border:1px solid black;width:35%;font-family: 'Courier New', Courier, monospace;"><strong>Quantity</strong></td>
+                                  <td style="border:1px solid black;width:35%;font-family: 'Courier New', Courier, monospace;" class="text-right"><strong>Totals</strong></td>
+                                            </tr>
+                            </thead>
+                            <tbody>
+                              <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                              <tr>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">tutionfee</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"> {{currentdata.tutionfee }}</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">1</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"> {{currentdata.tutionfee }}</td>
+                              </tr>
+                                            <tr>
+                                  <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">transportfee</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">  {{currentdata.transportfee }}</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">1</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">  {{currentdata.transportfee }}</td>
+                              </tr>
+                                            <tr>
+                                    <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">termfee</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">{{currentdata.termfee }}</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">1</td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">{{currentdata.termfee }}</td>
+                              </tr>
+                              <tr>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"></td>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"></td>
+                                <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"><strong>Subtotal</strong></td>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">{{currentdata.total }}</td>
+                              </tr>
+    
+                              <tr>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"></td>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"></td>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"><strong>Total</strong></td>
+                                <td  style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"> {{currentdata.total }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                            <br/><br/>
+                          <table style="width:100%">
+                           
+                            <tr>
+                              <td>  </td>
+                              <td>   </td>
+                            </tr>
+                            <tr>
+                              <td style="font-family: Arial, Helvetica, sans-serif">   </td>
+                              <td style="font-family: Arial, Helvetica, sans-serif"> <img    id="currentPhoto"  src="{{admindata.signature}}" onerror="this.onerror=null; this.src='../../assets/noimage.jpg'" alt="" width="100" > <h5>Pricipal</h5> </td>
+                            </tr>
+                          </table>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+      
+     
+      </div> 
+ 
+
+ 
+
+ 
+      
+      <div class="modal-footer">
+
+     
+        <button type="button" class="btn btn-primary" printTitle="Fee receipt" printSectionId="fees" ngxPrint> 
+          <i class="fa fa-download" aria-hidden="true"></i>
+          Download Pdf</button>
+        
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  

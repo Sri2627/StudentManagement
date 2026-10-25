@@ -1,0 +1,45 @@
+.btn-close{
+
+    background-color: #fff!important;
+    border: none !important;
+    font-size: 30px!important;
+    }
+    
+
+    .loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 60px;
+        height: 60px;
+        margin: -76px 0 0 -76px;
+        border: 6px solid #dbdbdb;
+        border-radius: 50%;
+        border-top: 6px solid #b44593;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+      } .loadingmessage {
+        position: absolute;
+        left: 40%;
+        top: 35%;
+        z-index: 1;
+        
+        Font-size:25px;
+
+   
+      }
+      
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+      }

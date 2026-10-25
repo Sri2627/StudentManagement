@@ -1,0 +1,415 @@
+ 
+<!-- Sidebar navigation -->
+<div class="container-fluid"  >
+    <div class="row">
+    
+    
+        
+        <!-- Main content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div  >
+            <div class="d-flex justify-content-between">
+              <div>
+                <h2>Syllabus </h2>
+              </div>
+              <div>
+                <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fas fa-plus"></i>Add Syllabus
+                </button>
+               </div>
+          </div>
+             
+          <hr/>
+            
+          <div>   
+
+
+        <!-- table-->
+           
+        <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+            <div>
+               <div class="d-flex justify-content-between"> 
+         
+                 <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+                 
+                 <div>             
+                   
+                   
+                 </div>
+         
+                 <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+                 <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+             </div>
+              </div>
+            
+            <div>
+             <div>
+         
+               <div>  
+               </div>        
+                     <div class="d-flex justify-content-between">
+                       <div><label for="cars">Records per page : &nbsp;</label></div>
+                       <div>  <select (change)="onTableSizeChange($event)"> 
+                         <option *ngFor="let size of tableSizes"> {{size}}</option>
+                       </select></div>  
+                  
+                 </div>
+               </div>  
+              </div>
+           </div>
+          
+          
+          
+          
+              
+           <div class="card" >
+            
+           
+            <div class="card-body">
+          
+         <div class="data">
+         
+             <table class="table table-striped table-light" id="download">
+                 <thead class="bg-light">
+                     <tr>
+                         <th scope="col"> Id </th>
+                         <th scope="col"> Subject</th>
+                         <th scope="col"> Section  </th>
+                         <th scope="col"> Standard  </th>
+                         <th scope="col"> Chapter No  </th>
+                         <th scope="col"> Chapter title  </th>
+                        
+                         <th scope="col">   </th>
+                 
+                         
+                     
+                        
+                     </tr>
+                 </thead>
+                 <tbody>
+
+             
+
+                   
+                     <tr *ngFor="let stu of syllbusdata  |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}let i = index">
+                         <td> {{stu.id}}</td>
+                         <td> {{stu.subject}}</td>
+                         <td> {{stu.filetype}}</td>
+                         <td> {{stu.standard}}</td>
+                         <td> {{stu.chapterno}}</td>
+                         <td> {{stu.chaptertitle}}</td>
+                     
+                         <td>
+         
+                        
+                        
+                             <button  type ="button"  class="btn btn-outline-primary"
+                             data-bs-toggle="modal" data-bs-target="#upload" (click)="getmychapter(stu.id)">Upload File</button>&nbsp;
+
+                          
+                             <button type ="button" class="btn btn-outline-danger" (click)="deletestudent(stu.id)"
+                             >Delete</button>&nbsp;
+                         </td>
+                        
+                     </tr>
+                 </tbody>
+             
+             
+             </table>
+                    
+              
+               
+             <div>
+         
+      </div></div>
+
+      
+             
+               
+         
+             
+         </div>
+
+         </div>
+         
+         <pagination-controls
+         previousLabel=" Prev"
+         nextLabel="Next"
+ 
+         (pageChange)="onTableDataChange($event)"></pagination-controls>
+              <!-- table-->
+
+
+
+
+
+          </div>
+                
+          </div>
+        </main>
+  
+    
+      
+         
+  
+  
+      <!--  Add Sections -->
+      
+       
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Syllabus</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">   
+                                
+                    <div class="form-group">
+                      <label for="description">Subject</label> 
+                      <select    class="form-control" name="subject" id="subject"     required  [(ngModel)]="section.subject"
+                      >
+                        <option value="none" >Select a Subject</option>
+      
+                        <option  class="sectionsli"  *ngFor="let item of mysubjects">       
+                          
+                          <input type="checkbox" [(ngModel)]="item.isSelected"     [(ngModel)]="mysubjects" name="mysections" value="{{item.subject}}"  />
+        
+                          {{item.subject}}
+        
+                        </option>
+                                         
+                      </select>
+                    </div>
+
+
+                      </div>
+                      <div class="col">   <div class="form-group">
+                        <label for="description">description</label> 
+                        <input   type="text"
+                          class="form-control"
+                          id="description"
+                          required
+                          [(ngModel)]="section.description"
+                          name="description"
+                        />
+                      </div>
+                    
+                    </div>
+                      <div class="w-100"></div>
+                      <div class="col">     <label for="description">Standard  </label> 
+                    
+                        <select id="standard" name="standard"  class="form-control"  [(ngModel)]="section.standard">
+                            <option value="0" selected >Select a Standard</option>
+                            <option value="1">1st Class</option>
+                            <option value="2">2 Class</option>
+                            <option value="3">3 Class</option>
+                            <option value="4">4 Class</option>
+                            <option value="5">5 Class</option>
+                            <option value="6">6 Class</option>
+                            <option value="7">7 Class</option>
+                            <option value="8">8 Class</option>
+                            <option value="9">9 Class</option>
+                            <option value="10">10 Class</option>
+                            <option value="11">11 Class</option>
+                            <option value="12">12 Class</option>
+                          </select></div>
+                      <div class="col">       
+
+                        <div class="form-group">
+                          <label for="description">Chapter (ex : Chapter1)</label> 
+                          <input   type="text"
+                            class="form-control"
+                            id="chapterno"
+                            required
+                            [(ngModel)]="section.chapterno"
+                            name="chapterno"
+                          />
+                        </div>
+                   </div>
+                      <div class="w-100"></div>
+                      <div class="col">
+                        <label for="Attachment">Video File Attachment</label> 
+                        <div class="row">
+                          <div class="col-8">
+                           
+                            <label class="btn btn-default p-0">
+                              <input type="file" (change)="selectFile($event)" />
+                            </label>
+                          </div>
+                        
+                          <div class="col-4">
+                             
+                            <button
+                              class="btn btn-success btn-sm"
+                              [disabled]="!selectedFiles"
+                              (click)="upload()"
+                            >
+                              Upload
+                            </button>
+                          </div>
+                        </div>
+                
+                   
+                        <div *ngIf="currentFile" class="progress my-3">
+                          <div
+                            class="progress-bar progress-bar-info"
+                            role="progressbar"
+                            attr.aria-valuenow="{{ progress }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            [ngStyle]="{ width: progress + '%' }"
+                          >
+                            {{ progress }}%
+                          </div>
+                        </div>
+                        
+                        <div *ngIf="message" class="alert alert-secondary" role="alert">
+                          {{ message }}
+                        </div>
+                        {{resfilename}}
+                  
+                      </div>
+                      <div class="col">    
+                        <div class="form-group">
+                          <label for="description">Chapter Title </label> 
+                          <input   type="text"
+                            class="form-control"
+                            id="chaptertitle"
+                            required
+                            [(ngModel)]="section.chaptertitle"
+                            name="chaptertitle"
+                          />
+                        </div></div>
+                      <div class="w-100"></div>
+                      <div class="col">
+                     
+            
+
+                      </div>
+                      <div class="col">
+
+
+                   
+          
+                        
+
+                      </div>
+
+                    </div>
+                    <button (click)="createsection()" class="btn btn-success">Submit</button>
+
+                  </div>
+      
+
+                    
+
+                
+    
+                  
+
+                
+
+                  
+                     
+                      
+           
+          
+          
+           
+                      <div *ngIf="submitted">
+                        <h4>section created successfully!</h4>
+                       
+                      </div>
+          
+           
+                </div>
+                <div class="modal-footer">
+          
+               
+          
+                    
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 
+                
+              </div>
+                
+                
+                
+              </div>
+            </div>
+          </div>
+          
+ <!--  -->
+
+       
+       
+ <div class="modal fade" id="upload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload Syllabus  </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+
+         <labeL> File Upload</labeL>
+                           
+        <label class="btn btn-default p-0">
+          <input type="file" (change)="selectFile($event)" />
+        </label>
+    
+   
+         
+        <button
+          class="btn btn-success btn-sm"
+          [disabled]="!selectedFiles"
+          (click)="upload()"
+        >
+          Upload
+        </button>
+ 
+    
+
+       
+    <div *ngIf="currentFile" class="progress my-3">
+      <div
+        class="progress-bar progress-bar-info"
+        role="progressbar"
+        attr.aria-valuenow="{{ progress }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [ngStyle]="{ width: progress + '%' }"
+      >
+        {{ progress }}%
+      </div>
+    </div>
+    
+    <div *ngIf="message" class="alert alert-secondary" role="alert">
+      {{ message }}
+    </div>
+    
+    <label class="" for="Attachment">Note : Only .pdf files are allowed to upload</label> 
+
+        </div>
+       
+        
+        <div class="modal-footer">
+          
+          <button (click)="uploadattachment(currentchapter.id)" class="btn btn-success">Update</button>
+          
+                    
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         
+        
+      </div>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+ 

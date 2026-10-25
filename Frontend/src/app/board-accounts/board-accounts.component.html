@@ -1,0 +1,220 @@
+<p>accounts works!</p><!-- <div class="container">
+  <header class="jumbotron">
+    <p>{{ content }}</p>
+  </header>
+</div>
+
+  -->
+ 
+ 
+<!-- Sidebar navigation -->
+<div class="container-fluid" style="margin-top: 35px;">
+    <div class="row">
+    
+    <nav  >
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+    
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/accounthome"> 
+              <i class="fas fa-user"></i>Dashboard
+            </a>
+          </li>
+    
+    
+  
+          <li class="nav-item">
+            <a class="nav-link  " routerLink="/accounts">
+              <i class="fas fa-user"></i> Accounts
+            </a>
+          </li>
+          
+  
+
+          <!-- Calling SignOut() Api from AuthService -->
+           
+           
+           
+           
+           
+        </ul>
+      </div>
+    </nav>
+        
+        <!-- Main content -->
+    
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="inner-adjust">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h2>Welcome</h2>
+              </div>
+              <div>
+                 Acadameic Year
+               </div>
+          </div>
+             
+          <hr/>
+            
+          <div>   
+
+            <div class="row">
+              <div class="col"> 
+                <div class="card"  >
+                  
+                  <div class="row no-gutters">
+                    <div class="card-header  gradient-custom-2" style="border-top-left-radius: 6px;
+                    border-bottom-left-radius: 6px">  </div>
+                           
+                    <div class="col-12 col-sm-6 col-md-8"> 
+  
+                      <div class="card-body">
+                        
+                     <h5>   <i class="fas fa-users"></i> Teachers    {{schoolteachers}}  </h5>
+<!--                        
+                        <a href="/teachers"  class="btn btn-secondary">Go to Teachers</a> -->
+                        
+                      </div>
+                    </div>
+                   
+                  </div>
+                
+                 
+                </div>
+            
+             
+
+
+              </div>
+              <div class="col"> 
+
+                <div class="card"  >
+                  <div class="row no-gutters">
+                    <div class="card-header  bg-primary" style="border-top-left-radius: 6px;
+                    border-bottom-left-radius: 6px">  </div>
+                    <div class="col-12 col-sm-6 col-md-8"> 
+  
+                      <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-user"></i>Students - {{schoolstudents}} </h5>
+                       
+                        <!-- <a href="/userlist" class="btn btn-secondary">Go to Students</a> -->
+                      </div>
+                    </div>
+                 
+                  </div>
+                
+                 
+                </div>
+
+                 
+
+              </div>
+              <div class="col"> 
+                <div class="card"  >
+                  <div class="row no-gutters">
+                    <div class="card-header  bg-warning" style="border-top-left-radius: 6px;
+                    border-bottom-left-radius: 6px">  </div>
+                    <div class="col-12 col-sm-6 col-md-8"> 
+  
+                      <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-laptop" aria-hidden="true"></i>
+                          Invoice Sent - {{totalRecords}} </h5>
+                      
+                        
+                      </div>
+                    </div>
+                 
+                  </div>
+                
+                 
+                </div>
+              
+
+              </div>
+              <div class="col">
+                <div class="card"  >
+                  <div class="row no-gutters">
+                    <div class="card-header  bg-success" style="border-top-left-radius: 6px;
+                    border-bottom-left-radius: 6px">  </div>
+                    <div class="col-12 col-sm-6 col-md-8"> 
+  
+                      <div class="card-body">
+                        <h5 class="card-title"> <i class="fa fa-id-badge" aria-hidden="true"></i>
+                          Payments Recived   </h5>
+                        
+                        
+                      </div>
+                    </div>
+                 
+                  </div>
+                
+                 
+                </div>
+                 
+                
+              </div>
+            </div>
+         
+
+
+
+          </div>
+
+                <div>
+
+                  <div class="row" style="padding-top: 15px;">
+                    <div class="col-6">
+ 
+                      <div class="card">
+                        <h5 class="card-header"> <i class="fa fa-calendar" aria-hidden="true"></i>
+                           Calendar</h5>
+                        <div class="card-body">
+                          
+                           
+      
+                        </div>
+                      </div>
+                     
+
+                    </div>
+                    <div class="col-6"> 
+                      <div class="card">
+                        <h5 class="card-header">Events</h5>
+                        <div class="card-body">
+                          
+                        </div>
+                      </div>
+
+                      <div class="card">
+                        <h5 class="card-header">Featured Students</h5>
+                        <div class="card-body">
+                          <h5 class="card-title">Special title treatment</h5>
+                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                          <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                      </div>
+
+
+                     
+
+
+                    </div>
+                  </div>
+                </div>
+         
+                <!-- <div class="card">
+                  <h5 class="card-header">Exams</h5>
+                  <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div> -->
+                
+          </div>
+        </main>
+  
+   
+         
+   
+ 

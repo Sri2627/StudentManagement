@@ -1,0 +1,530 @@
+  
+<div class="dashboard-wrapper">
+  <div class="container-fluid  dashboard-content">
+      <!-- ============================================================== -->
+      <!-- pageheader -->
+      <!-- ============================================================== -->
+      <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="page-header">
+
+                <div class="d-flex justify-content-between" style="margin-bottom: 5px;">
+                  <div>
+                    <h2 class="pageheader-title">  My Classroom - {{currentsection}}     </h2>
+                  </div>
+                  <div  >
+               
+                           
+                 
+                    
+              <b>Change Section </b>
+
+              <select   class="form-select" name="sections" id="sections"  #mySelect  
+              (change)='setmysection(mySelect.value)'>
+                <option value="none" >Select a Section</option>
+
+                <option *ngFor="let a of mysections; let i = index" [value]="mysections[i]"   (change)="setmysection(mysections[i])"> 
+                  {{mysections[i]}}
+                </option>
+              </select>&nbsp;&nbsp;
+            
+     
+              <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#messages">
+                <i class="fas fa-plus"></i>Send Message
+              </button> &nbsp;
+
+              <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-plus"></i>Add Student
+              </button>
+                   </div>
+              </div>
+              <hr/> 
+
+              <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+                <div>
+                <div class="d-flex justify-content-between"> 
+      
+                <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+      
+                <div>             
+      
+                <!-- <button  style=" margin-left:10px;" class="btn btn-primary " (click)="exportExcel()"  >
+                <i class="fa fa-download"></i>Download CSV 
+                </button>  -->
+                </div>
+      
+                <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+                <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+                </div>
+                </div>
+      
+                <div>
+                <div>
+      
+                <div>  
+                </div>        
+                <div class="d-flex justify-content-between">
+                <div><label for="cars">Records per page : &nbsp;</label></div>
+                <div>  <select (change)="onTableSizeChange($event)"> 
+                <option *ngFor="let size of tableSizes"> {{size}}</option>
+                </select></div>  
+      
+                </div>
+                </div>  
+                </div>
+                </div>
+
+
+              </div>
+          </div>
+      </div>
+      <!-- ============================================================== -->
+      <!-- end pageheader -->
+      <!-- ============================================================== -->
+      <div class="row">
+          <!-- ============================================================== -->
+          <!-- basic table  -->
+          <!-- ============================================================== -->
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="card">
+                  <h5 class="card-header">Students</h5>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                        
+                        <div class="content" >
+    
+    
+                          <div class="d-flex align-content-stretch flex-wrap">
+                            <div class="card" style="width: 16rem; margin: 12px;" 
+                            *ngFor="let stu of studentData  |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+                                  
+                            <img class="card-img-top"  id="currentPhoto" src="{{stu.photourl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="50" height="60">
+                            <div class="card-body"  id="download">
+                            <h5 class="card-title">  {{stu.fullname | titlecase}} - <span class="uppercase">{{stu.section}} </span> </h5>
+                            <!-- <p class="card-text"> {{stu._id|titlecase}}</p>
+                            <p class="card-text"> {{stu.username|titlecase}}</p> -->
+                            <p class="card-text">Rollno : {{stu.admissionno|titlecase}}</p>
+                            </div>
+                            <div class="card-footer">
+                              <a href="#"  routerLink="/profile/{{stu._id}}"  target="_blank" class="btn btn-primary"  > Profile</a> &nbsp;
+                           
+                             <!-- <button type ="button" class="btn btn-primary"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>  -->
+                     
+                            <button (click)="getstudent(stu._id)" type ="button" class="btn btn-primary"
+                            data-bs-toggle="modal" data-bs-target="#viewModal"  >Details</button>
+                     
+                            </div>
+                                  
+                            </div>
+                           
+                            </div>
+                           
+                                  
+                                   
+                       <div>
+              
+              
+                        </div>
+                 
+                      
+                               
+                      <ng-template #loggedOut>
+                        Please login.
+                      </ng-template>
+                              </div>
+
+                        <pagination-controls
+                        previousLabel=" Prev"
+                        nextLabel="Next"
+
+                        (pageChange)="onTableDataChange($event)"></pagination-controls>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- ============================================================== -->
+          <!-- end basic table  -->
+          <!-- ============================================================== -->
+      </div>
+   
+ 
+  
+   
+  </div>
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <div class="footer">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                  
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                  <div class="text-md-right footer-links d-none d-sm-block">
+                    
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- end footer -->
+  <!-- ============================================================== -->
+</div>
+
+
+
+ 
+            
+ 
+<!--Form Modal-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+             
+        <form
+        *ngIf="!isSuccessful"
+        name="userform"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                minlength="3"
+                maxlength="20"
+                #username="ngModel"
+              />
+              <div class="alert-danger" *ngIf="username.errors && f.submitted">
+                <div *ngIf="username.errors['required']">Username is required</div>
+                <div *ngIf="username.errors['minlength']">
+                  Username must be at least 3 characters
+                </div>
+                <div *ngIf="username.errors['maxlength']">
+                  Username must be at most 20 characters
+                </div>
+              </div>
+            </div></div>
+          <div class="col">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="6"
+                #password="ngModel"
+              />
+              <div class="alert-danger" *ngIf="password.errors && f.submitted">
+                <div *ngIf="password.errors['required']">Password is required</div>
+                <div *ngIf="password.errors['minlength']">
+                  Password must be at least 6 characters
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="w-100"></div>
+          <div class="col">
+            <div class="form-group">
+              <label for="fullname">Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="fullname"
+                [(ngModel)]="form.fullname"
+                required
+                minlength="3"
+                maxlength="20"
+                #fullname="ngModel"
+              />
+            </div></div>
+          <div class="col">
+
+            <div class="form-group">
+              <label for="username">Standard</label>
+              <input
+                type="text"
+                class="form-control"
+                name="standard"
+                [(ngModel)]="form.standard"
+                required
+                minlength="1"
+                maxlength="20"
+                #standard="ngModel"
+              />  
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col"> <div class="form-group">
+            <label for="username">Mobile</label>
+            <input
+              type="text"
+              class="form-control"
+              name="mobile"
+              [(ngModel)]="form.mobile"
+              required
+              minlength="3"
+              maxlength="20"
+              #mobile="ngModel"
+            />
+          </div></div>
+          <div class="col">
+            <div class="form-group">
+              <label for="section">section</label>
+              <input
+                type="text"  
+                class="form-control"
+                name="section"
+                [(ngModel)]="form.section"
+                required
+                minlength="1"
+                maxlength="500"
+                #section="ngModel"
+                
+              />
+
+           
+            </div>
+
+          </div>
+          <div class="w-100"></div>
+          <div class="col">  <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="form.email"
+              required
+              email
+              #email="ngModel"
+            />
+            <div class="alert-danger" *ngIf="email.errors && f.submitted">
+              <div *ngIf="email.errors['required']">Email is required</div>
+              <div *ngIf="email.errors['email']">
+                Email must be a valid email address
+              </div>
+            </div>
+          </div></div>
+          <div class="col">
+            <div class="form-group">
+              <label for="username">Address</label>
+              <input
+                type="text"
+                class="form-control"
+                name="address"
+                [(ngModel)]="form.address"
+                required
+                minlength="3"
+                maxlength="20"
+                #address="ngModel"
+              />
+            </div>
+             
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">   <div class="form-group">
+            <label for="username">photourl</label>
+            <input
+              type="text"
+              class="form-control"
+              name="photourl"
+              [(ngModel)]="form.photourl"
+              required
+              minlength="3"
+              maxlength="500"
+              #photourl="ngModel"
+            />
+          </div>
+</div>
+          <div class="col"> 
+            <div class="form-group">
+             
+              <button class="btn btn-primary " style="margin-top: 30px;">ADD NEW USER</button>
+            </div>
+      </div>
+          <div class="w-100"></div>
+          <div class="col"> </div>
+          <div class="col"> </div>
+        </div>
+
+
+
+      </div>
+
+            
+               
+             
+    
+        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+          Signup failed!<br />{{ errorMessage }}
+        </div>
+      
+  
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+      </div>
+    </form>
+
+ 
+
+
+ 
+      </div>
+      <div class="modal-footer">
+
+        <div class="alert alert-success" *ngIf="isSuccessful">
+          Your registration is successful!
+          </div>
+
+          
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       
+      
+    </div>
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{studentData.fullname}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+               <img class="card-img-top"  id="currentPhoto" src="{{studentData.photourl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="50" height="60">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{studentData.fullname|titlecase}}</h5>
+                <p class="card-text"> Email : {{studentData.email|titlecase}}</p>
+                <p class="card-text"> Mobile: {{studentData.mobile|titlecase}}</p>
+                <p class="card-text"> Location: {{studentData.address|titlecase}}</p>
+                <p class="card-text"> Section: {{studentData.section|titlecase}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Messages</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="submit-form">
+          <div *ngIf="!submitted">
+
+              <!-- <div class="form-group">
+                <label for="customerid">id</label>
+                <input   
+                  type="text"
+                  class="form-control"
+                  id="customerid"
+                  required
+                  [(ngModel)]="tutorial.customerid"
+                  name="customerid"
+                
+                  value = "{{ currentUser.id }}"
+                />
+              </div>   -->
+
+
+            <div class="form-group">
+              <label for="title">Subject</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                required
+                [(ngModel)]="tutorial.title"
+                name="title"
+              />
+            </div>
+      
+            <div class="form-group">
+              <label for="description">Message</label>
+              <input   type="text"
+                class="form-control"
+                id="description"
+                required
+                [(ngModel)]="tutorial.description"
+                name="description"
+              />
+            </div>
+        
+
+
+    
+            <button (click)="sendmessage()" class="btn btn-success">Submit</button>
+          </div>
+      
+          <div *ngIf="submitted">
+            <h4>Message sent successfully!</h4>
+           
+          </div>
+        </div>
+
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

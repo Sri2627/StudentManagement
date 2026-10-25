@@ -1,0 +1,241 @@
+ 
+
+           
+<div class="container-fluid" >
+  <div class="row">
+ 
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+     
+   
+
+      
+      <div class="table-responsive">
+        
+              <div >
+                             
+        <div class="d-flex justify-content-between">
+          <div>
+            <h2> Exams</h2>
+          </div>
+          <div>
+      
+            
+            <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fas fa-plus"></i>Add Exam Titles
+            </button>
+          
+      
+           </div>
+      </div>
+           
+      <hr/><!-- table-->
+
+      <div>   
+
+
+        <!-- table-->
+           
+        <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+            <div>
+               <div class="d-flex justify-content-between"> 
+         
+                 <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+                 
+                 <div>             
+                   
+                   
+                 </div>
+         
+                 <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+                 <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+             </div>
+              </div>
+            
+            <div>
+             <div>
+         
+               <div>  
+               </div>        
+                     <div class="d-flex justify-content-between">
+                       <div><label for="cars">Records per page : &nbsp;</label></div>
+                       <div>  <select (change)="onTableSizeChange($event)"> 
+                         <option *ngFor="let size of tableSizes"> {{size}}</option>
+                       </select></div>  
+                  
+                 </div>
+               </div>  
+              </div>
+           </div>
+          
+          
+          
+          
+             
+           <div class="card" >
+            
+      
+            
+            <div class="card-body">
+          
+         <div class="data">
+         
+             <table class="table table-striped table-light" id="download">
+                 <thead class="table-light">
+                     <tr>
+                         <th scope="col"> Id </th>
+                         <th scope="col"> Title </th>
+                         <th scope="col"> Description  </th>
+                         <th scope="col">   </th>
+                 
+                         
+                     
+                        
+                     </tr>
+                 </thead>
+                 <tbody>
+
+             
+
+                   
+                     <tr *ngFor="let stu of sectionData  |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}let i = index">
+                         <td> {{stu.id}}</td>
+                         <td> {{stu.title}}</td>
+                         <td> {{stu.description}}</td>
+                 
+                     
+                         <td>
+         
+                        
+                        
+                             <button  type ="button"  class="btn btn-outline-primary"
+                             data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>&nbsp;
+
+                          
+                             <button type ="button" class="btn btn-outline-danger" (click)="deletestudent(stu.id)"
+                             >Delete</button>&nbsp;
+                         </td>
+                        
+                     </tr>
+                 </tbody>
+             
+             
+             </table>
+                    
+              
+               
+             <div>
+         
+      </div></div>
+
+      
+             
+               
+         
+             
+         </div>
+
+         </div>
+         <pagination-controls
+         previousLabel=" Prev"
+         nextLabel="Next"
+ 
+         (pageChange)="onTableDataChange($event)"></pagination-controls>
+              <!-- table-->
+
+
+
+
+
+          </div>
+    
+
+      
+      <ng-template #loggedOut>
+        Please login.
+      </ng-template>
+              </div>
+          
+      </div>
+    </main>
+  
+
+</div>
+</div>
+
+
+
+    
+      
+         
+  
+  
+      <!--  Add Sections -->
+      
+       
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Sections</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                
+              
+                
+        
+    
+                    <div class="form-group">
+                        <label for="description">Exam</label> 
+                        <input   type="text"
+                          class="form-control"
+                          id="subject"
+                          required
+                          [(ngModel)]="currenttitle.title"
+                          name="subject"
+                        />
+                      </div>
+                   
+        <br/>
+
+                      <div class="form-group">
+                        <label for="description">description  <head></head></label> 
+                        <input   type="text"
+                          class="form-control"
+                          id="hodid"
+                          required
+                          [(ngModel)]="currenttitle.description"
+                          name="hodid"
+                        />
+                      </div>
+                   
+            
+              
+          
+          
+           
+                      <button (click)="createsubject()" class="btn btn-success">Submit</button>
+                      <div *ngIf="submitted">
+                        <h4>section created successfully!</h4>
+                       
+                      </div>
+          
+           
+                </div>
+                <div class="modal-footer">
+          
+               
+          
+                    
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 
+                
+              </div>
+                
+                
+                
+              </div>
+            </div>
+          </div>
+          

@@ -1,0 +1,680 @@
+ 
+
+
+  <div class="container-fluid"  >
+    <div class="row">
+    
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+     
+        
+        <div class="table-responsive">
+          
+                <div class="inner-adjust">
+                               
+          <div class="d-flex justify-content-between">
+            <div>
+              <h2>Exams - {{currentsection}} </h2>
+ 
+            </div>
+            <div>
+        
+                 
+              <b>Change Section </b>
+
+              <select   class="form-select" name="sections" id="sections"  #mySelect
+              (change)='setmysection(mySelect.value)'>
+                <option value="none" >Select a Section</option>
+
+                <option *ngFor="let a of mysections; let i = index" [value]="mysections[i]"   (change)="setmysection(mysections[i])"> 
+                  {{mysections[i]}}
+                </option>
+              </select>&nbsp;&nbsp;
+            
+                <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#messages">
+                    <i class="fas fa-plus"></i> Add New Exam
+                  </button>&nbsp;
+                  <a    class="btn btn-primary "  routerLink="/resultchart">
+                    <i class="fa fa-id-card" aria-hidden="true"></i>ExamResults
+                  </a>
+
+               
+
+
+
+           <!-- Button trigger modal -->
+
+  
+             </div>
+        </div>
+             
+        <hr/><!-- table-->
+
+        <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+          <div>
+          <div class="d-flex justify-content-between"> 
+
+          <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+
+          <div>             
+            <select    class="form-control" name="title" id="title"     [(ngModel)]="exam.title"  (change)='searchtitleExams(exam.title)'
+            >
+            <option value="" >Select a Section</option>
+
+              <option  class="sectionsli"  *ngFor="let item of examtitles">       
+                
+                <input type="checkbox"      [(ngModel)]="examtitles" name="examtitles" value="{{item.title}}"  />
+
+                {{item.title}}
+
+              </option>
+                               
+            </select>
+           
+     
+      
+          <!-- <button  style=" margin-left:10px;" class="btn btn-primary " (click)="exportExcel()"  >
+          <i class="fa fa-download"></i>Download CSV 
+          </button>  -->
+          </div>
+
+          <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+          <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+
+
+
+          </div>
+          </div>
+
+          <div>
+          <div>
+
+          <div>  
+          </div>        
+          <div class="d-flex justify-content-between">
+       
+          <div><label for="cars">Records per page : &nbsp;</label></div>
+          <div>  <select (change)="onTableSizeChange($event)"> 
+          <option *ngFor="let size of tableSizes"> {{size}}</option>
+          </select></div>  
+
+          </div>
+          </div>  
+          </div>
+          </div>
+
+
+          <!-- <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"></div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+          </div> -->
+
+
+          <div class="data">
+
+                
+    
+ 
+            <div class=" ">
+                <div  
+                *ngFor="let exam of exams   |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+                      
+                <div class="row">
+                    <div class="col-sm-1" style="text-align:center">
+                      <div class="card" style="height:8rem">
+                        <div class="card-header"><h5> DATE</h5></div>
+              
+                        <div class="card-body" style="width:8rem">
+                          <div class="card-title"> {{exam.date}} </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-8">
+                      <div class="card" style="height: 8rem">
+                       
+              
+                        <div class="card-body">
+                            
+                          
+                           
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title"> {{exam.title}} - {{exam. subject}}</h4>  
+                                    <h6 class="card-text"> Syllabus : {{exam.syllabus}}</h6>
+                                </div>
+                                <div>
+                            
+                                  
+                                
+                                    <button  class="btn btn-warning "  data-bs-toggle="modal" data-bs-target="#alert">
+                                        <i class="fas fa-user"></i> Send Alert 
+                                      </button>&nbsp;
+
+                                          
+                                     
+                                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable"(click)="getexam(exam.id)" (click)="getstudents(currentUserdata.section)" >
+                                        <i class="fas fa-plus"></i>Set Result
+                                      </button>&nbsp;
+                                      <a href="#"  routerLink="/results/{{exam.id}}"    class="btn btn-primary" style="margin-right: 5px;"> Result</a>
+                                      <button type="button" class="btn btn-success"    (click)="Updateexam(exam.id)"   >
+                                        <i class="fas fa-user"></i>Show  
+                                      </button>&nbsp; 
+                                       
+                                       
+                                        <button  class="btn btn-primary"   (click)="generatemarklist(exam.title)">
+                                          <i class="fas fa-plus"></i>Mark list
+                                        </button>&nbsp;
+
+                                        <button  class="btn btn-primary btn-danger"  (click)="Deleteexam(exam.id)">
+                                          <i class="fas fa-trash"></i>  
+                                      </button>  &nbsp; 
+                                 </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+              
+                      
+                </div>
+               
+                </div>  
+
+        
+
+          <!-- <table class="table table-striped table-light" id="download">
+          <thead class="table-dark">
+          <tr>
+              <th scope="col"> Id </th>
+              <th scope="col"> Exam Title </th>
+              <th scope="col"> Subject </th>
+              <th scope="col"> Syllabus </th>
+              <th scope="col"> Date</th>
+              <th scope="col"></th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let tutorial of exams  | orderBy: exam.date |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}let i = index">
+              <td> {{tutorial.id}}</td>
+              <td> {{tutorial.title}}</td>
+               <td> {{tutorial.subject}}</td>
+               <td> {{tutorial.syllabus}}</td>
+               <td> {{tutorial.date}}</td>
+               
+
+         
+          <td>
+
+          <button type ="button" class="btn btn-outline-primary"
+          data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>&nbsp;
+          <button type ="button" class="btn btn-outline-danger" (click)="deleteexam(tutorial.id)"
+          >Delete</button>&nbsp;
+
+
+          </td>
+
+          </tr>
+          </tbody>
+
+
+          </table> -->
+
+
+          <div class="d-flex justify-content-between">
+              <div>
+                <h2> </h2>
+              </div>
+              <div>
+        
+                  <!-- <button  class="btn btn-outline-primary  btn-lg"  data-bs-toggle="modal" >
+                      <i class="fa fa-calculator"></i> Total : {{total}}   
+                    </button>
+                  &nbsp;
+                    <button  class="btn btn-primary btn-lg"  data-bs-toggle="modal">
+                      <i class="fa fa-truck"></i> Order  
+                    </button> -->
+                    
+          
+               </div>
+            </div>
+               
+          <div>
+
+          </div> 
+
+
+           
+
+
+
+          </div>
+          <pagination-controls
+          previousLabel=" Prev"
+          nextLabel="Next"
+
+          (pageChange)="onTableDataChange($event)"></pagination-controls>
+          <!-- table-->
+                 
+
+          
+        
+                 
+        <ng-template #loggedOut>
+          Please login.
+        </ng-template>
+                </div>
+            
+        </div>
+      </main>
+    
+
+ 
+         
+<!-- Modal -->
+<div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Create Exam
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="submit-form">
+          <div *ngIf="!submitted">
+
+          
+
+            <div class="form-group">
+              <label for="title">Title</label>
+              <!-- <input
+                type="text"
+                class="form-control"
+                id="title"
+                required
+                [(ngModel)]="exam.title"
+                name="title"
+              /> -->
+
+              <!-- <select id="title"   class="form-control"  name="title"    [(ngModel)]="exam.title">
+                <option value="None">Select a Exam</option>
+                <option value="Unit Exam">Unit Exam</option>
+                <option value="Weekly Exam">Weekly Exam</option>
+                <option value="Quaterly Exam">Quaterly Exam</option>
+                <option value="Half Yearly Exam">Half Yearly Exam</option>
+                <option value="Anuual Exam">Anuual Exam</option>
+              </select> -->
+
+              
+              <select    class="form-control" name="title" id="title"     [(ngModel)]="exam.title"
+              >
+                <option value="none" >Select a exam</option>
+
+                <option  class="sectionsli"  *ngFor="let item of examtitles">       
+                  
+                  <input type="checkbox"      [(ngModel)]="examtitles" name="examtitles" value="{{item.title}}"  />
+
+                  {{item.title}}
+
+                </option>
+                                 
+              </select>
+
+ 
+
+            </div>
+            <div class="form-group">
+                <label for="description">Subject</label>
+                <!-- <input   type="text"
+                  class="form-control"
+                  id="subject"
+                  required
+                  [(ngModel)]="exam.subject"
+                  name="subject"
+                /> -->
+
+                <!-- <select id="subject" name="subject"  class="form-control"  [(ngModel)]="exam.subject">
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Telugu">Telugu</option>
+                    <option value="Marati">Marati</option>
+                    <option value="kannada">kannada</option>
+                    <option value="Malayalam">Malayalam</option>
+                    <option value="French">French</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Science">Science</option>
+                    <option value="Social">Social</option>
+                    <option value="Computers">Computers</option>
+                  </select> -->
+
+                  <select    class="form-control" name="subject" id="subject"     [(ngModel)]="exam.subject"
+                  >
+                    <option value="none" >Select a Subject</option>
+  
+                    <option  class="sectionsli"  *ngFor="let item of mysubjects">       
+                      
+                      <input type="checkbox" [(ngModel)]="item.isSelected"     [(ngModel)]="mysubjects" name="mysections" value="{{item.subject}}"  />
+    
+                      {{item.subject}}
+    
+                    </option>
+                                     
+                  </select>
+              </div>
+      
+            <div class="form-group">
+              <label for="description">Syllabus</label>
+              <input   type="text"
+                class="form-control"
+                id="syllabus"
+                required
+                [(ngModel)]="exam.syllabus"
+                name="syllabus"
+              />
+            </div>
+         
+
+              <div class="form-group">
+                <label for="description">Date</label>
+                <input type="date"
+                  class="form-control"
+                  id="date"
+                  required
+                  [(ngModel)]="exam.date"
+                  name="date"
+                />
+              
+                
+
+              </div>
+
+  
+    
+            <button (click)="createexam()" class="btn btn-success">Submit</button>
+            <div *ngIf="submitted">
+              <h4>Message sent successfully!</h4>
+             
+            </div>
+          </div>
+      
+          <div *ngIf="submitted">
+            <h4>Message sent successfully!</h4>
+           
+          </div>
+        </div>
+
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"   (click)="reloadPage()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Alert Message -->
+
+<div class="modal fade" id="alert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Send Message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          
+          <div class="submit-form">
+            <div *ngIf="!submitted">
+  
+                
+  
+              <div class="form-group">
+                <label for="title">Subject</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  required
+                  [(ngModel)]="tutorial.title"
+                  name="title"
+                />
+              </div>
+        
+              <div class="form-group">
+                <label for="description">Message</label>
+
+                <textarea 
+                type="text"
+                class="form-control"
+                id="description"
+                required
+                [(ngModel)]="tutorial.description"
+                name="description"
+                 rows="4"></textarea>
+
+ 
+
+                
+              </div>
+          
+  
+  
+      
+              <button (click)="getmystudents(currentUserdata.section)" class="btn btn-success">Submit</button>
+            </div>
+        
+            <div *ngIf="submitted">
+              <h4>Message sent successfully!</h4>
+             
+            </div>
+          </div>
+  
+  
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+   
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog  modal-lg  modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Set Result</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>  Search by Name  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchtermstudents"></div>  
+     
+        <!-- <div class="form-group">
+          <label for="description">Subject</label> 
+          <select    class="form-control" name="subject" id="subject"    >
+           
+
+            <option  class="sectionsli"  *ngFor="let stu  of studentData" (change)="getstudent(stu._id)">       
+              
+              <input type="checkbox" [(ngModel)]="stu .isSelected"     [(ngModel)]="studentData" name="studentData" value="{{stu .fullname}}"   />
+
+              {{stu.fullname}} - {{stu.admissionno}}
+
+            </option>
+                             
+          </select>
+        </div> -->
+        <div class="row no-gutters">
+            
+            <div class="col-6 col-md-4">
+               
+               
+                    <div class="card" style="width: 16rem;">
+                        <div class="card-header">
+                        <h5> StudentName - Rollno</h5>
+                      
+                        </div>
+                     <div class="scroll">
+                      <ul class="list-group list-group-flush"  *ngFor="let stu of studentData |filter:searchtermstudents    let i = index">
+                        <li class="list-group-item" style="margin-top: 10px;"  ><button type="button" class="btn btn-outline-primary" (click)="getstudent(stu._id)" >{{stu.fullname}}-{{stu.admissionno}}  </button> </li>
+                    
+
+                   
+
+
+                      </ul>
+                     </div>
+
+                      
+                      </div>
+                     
+
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-8">
+
+              <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img class="card-img-top"  id="currentPhoto" src="{{currentStudent.photourl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="50" height="60">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body"  >
+                      <h5> {{currentStudent.fullname}} - {{currentStudent.section}}  </h5>
+                      
+                      <div class="card bg-light mb-3" style="max-width: 18rem;">
+                   
+                        <div class="card-body"  *ngIf="isresultset">
+                          <h5> {{currentResult.totalmarks}} --  {{currentResult.marksobtained}} -- {{currentResult.is_attended}} -- {{currentResult.ispassed}}</h5>
+                           
+                        </div>
+                      </div>
+                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="!isresultset">   
+
+                <div class="card">
+                  <div class="card-header">
+                      <h5> {{currentExam.title}} - {{currentExam.subject}}  </h5>
+
+                   
+
+                  </div>
+                  <div class="card-body">
+                   
+     
+                      <div class="submit-form">
+                          <div *ngIf="!submitted">
+                
+                          
+                              <div class="form-group">
+
+                              
+                                  <label for="description">Total Marks</label>
+                                 
+                                  <select id="totalmarks"  name="totalmarks"  class="form-control"  required [(ngModel)]="result.totalmarks">
+                                      <option value="25">25</option>
+                                      <option value="50">50</option>
+                                      <option value="100">100</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                  <label for="description">Marks Obtained</label>
+                                  <input   type="text"
+                                    class="form-control"
+                                    id="marksobtained"
+                                    required
+                                    [(ngModel)]="result.marksobtained"
+                                    name="marksobtained"
+                                  />
+                                </div>
+                         
+                       
+                      
+                            <div class="form-group">
+                              <label for="description">Is_attended</label>
+                              <select id="is_attended" name="is_attended"  class="form-control"  [(ngModel)]="result.is_attended">
+                                  <option value="true">Attended</option>
+                                  <option value="false">Absent</option>
+                                           
+                                </select>
+                            </div>
+                         
+                
+                              <div class="form-group">
+                                <label for="description">ispassed</label>
+                                <select id="ispassed" name="ispassed"  class="form-control"  [(ngModel)]="result.ispassed">
+                                  <option value="true">Passed</option>
+                                  <option value="false">Failed</option>
+                                           
+                                </select>
+                                
+                
+                              </div>
+                
+                  
+                    
+                            <button (click)="setresult()" class="btn btn-success">Submit</button>
+                            
+                            <div *ngIf="submitted">
+                              <h4>Result sent successfully!</h4>
+                              <button class="btn btn-success" (click)="newresult()">Add</button>
+                            </div>
+                          </div>
+                      
+                       <div *ngIf="submitted">
+                            <h4>Result sent successfully!</h4>
+                            <button class="btn btn-success" (click)="newresult()">Add</button>
+                          </div>  
+                        </div>
+                
+
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="isresultset">  EDIT </div>
+                
+           
+                  
+
+            
+ 
+            </div>
+          </div>
+      
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="updateResult(currentExam.id)">Update Result</button>
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+

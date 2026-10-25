@@ -1,0 +1,244 @@
+<!-- <div class="container">
+  <header class="jumbotron">
+    <p>{{ content }}</p>
+  </header>
+</div>
+
+  -->
+
+
+  <div class="container-fluid" style="margin-top: 55px;">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar"   >
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin"> 
+                <i class="fas fa-user"></i>Dashboard
+              </a>
+            </li>
+      
+      
+           <li class="nav-item">
+              <a class="nav-link active" routerLink="/student">
+                <i class="fas fa-user"></i>Student
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " routerLink="/teachers">
+                <i class="fas fa-user"></i>Teacher
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link " routerLink="/csvupload">
+                <i class="fas fa-user"></i>csvupload
+              </a>
+            </li>
+  
+            <li class="nav-item">
+              <a class="nav-link  active" routerLink="/sections">
+                <i class="fas fa-user"></i>sections
+              </a>
+            </li>
+
+            
+          </ul>
+ 
+        </div>
+      </nav>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+       
+     
+
+        
+        <div class="table-responsive">
+          
+                <div class="inner-adjust">
+          
+                
+          <div class="d-flex justify-content-between">
+              <div>
+                <h2>Students</h2>
+              </div>
+              <div>
+          
+                
+                
+                <button  class="btn btn-primary " (click)="clickAddStudent()" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fas fa-plus"></i>Add Student
+                </button>
+          
+          
+               </div>
+          </div>
+               
+          <hr/>
+              
+              
+                  <!-- Show user data when logged in -->
+                 
+                 
+          <!-- table-->
+           
+          <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+             <div>
+                <div class="d-flex justify-content-between"> 
+          
+                  <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+                  
+                  <div>             
+                    
+                    <button  style=" margin-left:10px;" class="btn btn-primary " (click)="exportExcel()"  >
+                        <i class="fa fa-download"></i>Download CSV 
+                      </button> 
+                  </div>
+          
+                  <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+                  <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>
+              </div>
+               </div>
+             
+             <div>
+              <div>
+          
+                <div>  
+                </div>        
+                      <div class="d-flex justify-content-between">
+                        <div><label for="cars">Records per page : &nbsp;</label></div>
+                        <div>  <select (change)="onTableSizeChange($event)"> 
+                          <option *ngFor="let size of tableSizes"> {{size}}</option>
+                        </select></div>
+                   
+                   
+                   
+                   
+                   
+                   
+                  </div>
+                </div>  
+               </div>
+            </div>
+           
+           
+           
+           
+           
+           
+          <div class="data">
+          
+              <table class="table table-striped table-light" id="download">
+                  <thead class="table-dark">
+                      <tr>
+                          <th scope="col"> Id </th>
+                          <th scope="col"> Name </th>
+                          <th scope="col"> Email </th>
+                          <th scope="col"> Mobile </th>
+                          <th scope="col"> Fees </th>
+                          <th scope="col"> Location </th>
+                          <th scope="col"></th>
+                         
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let stu of studentData |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+                          <td> {{stu.id}}</td>
+                          <td> {{stu.name}}</td>
+                          <td> {{stu.email}}</td>
+                          <td> {{stu.mobile}}</td>
+                          <td> {{stu.fees}}</td>
+                          <td> {{stu.location}}</td>
+                          
+                          <td>
+          
+                          
+                              <button (click)="onEdit(stu)" type ="button" class="btn btn-primary"
+                               data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>&nbsp;
+                              <button  (click)="deleteStudent(stu)" class=" btn btn-danger">Delete</button>
+                           </td>
+                      </tr>
+                  </tbody>
+              
+              
+              </table>
+                     
+                <div>
+                  <pagination-controls
+                  previousLabel=" Prev"
+                  nextLabel="Next"
+          
+                  (pageChange)="onTableDataChange($event)"></pagination-controls>
+          
+                </div>  
+          
+                
+          
+              
+          </div>
+          
+               <!-- table-->
+          
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">{{modaltitle}} </h5> 
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      </div>
+                      <div class="modal-body">
+                          <form [formGroup] ="stunderform">
+                          <div class="mb-3">
+                          <label class="form-label" >Name</label>
+                          <input type="text" class="form-control" formControlName="name">
+                          </div>
+                          <div class="mb-3">
+                          <label class="form-label">Email</label>
+                          <input type="email" class="form-control" formControlName="email">
+                          </div>
+                          <div class="mb-3">
+                          <label class="form-label">Phone</label>
+                          <input type="text" class="form-control" formControlName="mobile">
+                          </div>
+          
+                          <div class="mb-3">
+                          <label class="form-label">Fees</label>
+                          <input type="text" class="form-control" formControlName="fees">
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" formControlName="location">
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" *ngIf="showSave" (click)="postStudentDetails()" class="btn btn-primary">Save</button>
+                          <button type="button" *ngIf="showUpdate" (click)="updateStudentDetails()" class="btn btn-primary" data-dismiss="modal">Update</button>
+                        
+                      </div>
+                  </div>
+              </div>
+          </div>
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+          
+                </div>
+            
+        </div>
+      </main>
+    
+
+ 

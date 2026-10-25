@@ -1,0 +1,375 @@
+ 
+
+  <div class="container-fluid" style="margin-top: 35px;" >
+    <div class="row">
+      
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+       
+     
+
+        
+        <div class="table-responsive">
+          
+                <div class="inner-adjust">
+          
+                
+          <div class="d-flex justify-content-between">
+              <div>
+                <h2>My File Box </h2>
+              </div>
+              <div>
+          
+          
+                <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#messages">
+                  <i class="fas fa-plus"></i>Upload File
+                </button>&nbsp;
+             
+                
+                <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fas fa-plus"></i>Create Folder
+                </button>&nbsp;
+                 
+              
+               </div>
+          </div>
+          <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+          </div> -->
+                 
+          <hr/>
+          
+         
+                 
+          <!-- table-->
+               <!-- table-->
+           
+          <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+            <div>
+               <div class="d-flex justify-content-between"   > 
+                <button  class="btn btn-primary "    (click)="reloadPage()">
+                  Home
+                  </button>&nbsp;
+
+                <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+                
+             
+
+
+                 <div>             
+                  <!-- <button  style=" margin-left:10px;" class="btn btn-primary " (click)="exportExcel()"  >
+                    <i class="fa fa-download"></i>Download CSV 
+                  </button>    -->
+                 </div>
+         
+                 <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+                 <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+             </div>
+              </div>
+            
+            <div>
+             <div>
+         
+               <div>  
+               </div>        
+                     <div class="d-flex justify-content-between">
+                       <div><label for="cars">Records per page : &nbsp;</label></div>
+                       <div>  <select (change)="onTableSizeChange($event)"> 
+                         <option *ngFor="let size of tableSizes"> {{size}}</option>
+                       </select></div>  
+                  
+                 </div>
+               </div>  
+              </div>
+           </div>
+          
+          
+          
+         
+          
+         <div class="data">
+         
+              
+    <div class="content" >
+    
+    
+      <div class="d-flex align-content-stretch flex-wrap">
+        <div class="card" style="width: 16rem; margin: 12px;" 
+        *ngFor="let stu of fileData  | orderBy: order |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+               
+        <div class="card-body"  >
+     
+          <!-- <p class="card-text"> {{stu._id|titlecase}}</p>
+          <p class="card-text"> {{stu.username|titlecase}}</p> -->
+          
+  
+          <div class="row">
+            <div class="col-sm-4" > <div *ngIf="stu.is_folder" >  <img src="../../assets/folder.png" width="40px" (click)="getmychildren(stu.id)" /> </div> <a href="{{stu.fileurl}}" target="_blank"><img src={{stu.fileurl}} width="40px"/></a></div>
+            <div class="col-sm-8">   <h6 class="card-title">  {{stu.foldername | titlecase}}  </h6>  </div>
+
+            
+          </div>
+          Size : {{stu.size/1000000}}  MB
+          </div>
+
+          
+        
+        <div class="card-footer">
+         
+         
+ 
+        <button (click)="setfile(stu.id)" type ="button" class="btn btn-primary"
+        data-bs-toggle="modal" data-bs-target="#viewModal" style="margin-left: 5px;">Move</button>&nbsp;
+        
+        <button type ="button" class="btn btn-outline-danger" (click)="deletefile(stu.id)"
+        ><i class="fas fa-trash"></i></button>&nbsp;
+        <!-- <button type ="button" class="btn btn-outline-success"   (click)="getdetails(stu.foldername)"
+        ><i class="fas fa-plus"></i></button>&nbsp; -->
+        
+ 
+        </div>
+              
+        </div>
+       
+      </div>
+       
+              
+               
+             <div>
+         
+     
+
+      
+            </div>  
+               
+         
+             
+         </div>
+         <pagination-controls
+         previousLabel=" Prev"
+         nextLabel="Next"
+ 
+         (pageChange)="onTableDataChange($event)"></pagination-controls>
+              <!-- table-->
+                 
+                     
+          
+           
+             <!-- Modal2-->
+            </div>
+         
+    
+ 
+
+            <!-- View Details-->
+
+            
+ 
+<!--Form Modal-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+  
+  
+         
+        <div class="submit-form">
+          <div *ngIf="!submitted">
+
+              <!-- <div class="form-group">
+                <label for="customerid">id</label>
+                <input   
+                  type="text"
+                  class="form-control"
+                  id="customerid"
+                  required
+                  [(ngModel)]="tutorial.customerid"
+                  name="customerid"
+                
+                  value = "{{ currentUser.id }}"
+                />
+              </div>   -->
+
+
+            <div class="form-group">
+              <label for="foldername">Folder Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="foldername"
+                required
+                [(ngModel)]="file.foldername"
+                name="foldername"
+              />
+            </div>
+       
+        
+
+
+    
+            <button (click)="createFolder()" class="btn btn-success">Submit</button>
+            <div *ngIf="submitted">
+              <h4>Message sent successfully!</h4>
+             
+            </div>
+          </div>
+      
+          <div *ngIf="submitted">
+            <h4>Message sent successfully!</h4>
+           
+          </div>
+        </div>
+ 
+
+
+ 
+      </div>
+      <div class="modal-footer">
+ 
+
+          
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       
+      
+    </div>
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Move To Folder</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+       
+
+        <div class="card mt-3">
+       
+          <ul
+            class="list-group list-group-flush"
+            *ngFor="let stu of fileData"
+          >
+
+          <div *ngIf="stu.is_folder" > 
+            <li class="list-group-item">
+              <img src="../../assets/folder.png" width="40px"   (click)="assignparent(stu.id)"/>
+              {{ stu.foldername }}
+            </li>
+            </div>
+          </ul>
+        </div>
+
+
+ 
+      
+      </div>
+      
+      
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Messages</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-8">
+            <label class="btn btn-default p-0">
+              <input type="file" (change)="selectFile($event)" />
+            </label>
+          </div>
+        
+          <div class="col-4">
+            <button
+              class="btn btn-success btn-sm"
+              [disabled]="!selectedFiles"
+              (click)="upload()"
+            >
+              Upload
+            </button>
+          </div>
+        </div>
+
+           
+        <div *ngIf="currentFile" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }"
+          >
+            {{ progress }}%
+          </div>
+        </div>
+        
+        <div *ngIf="message" class="alert alert-secondary" role="alert">
+          {{ message }}
+        </div>
+        {{resfilename}}
+        <!-- <div class="card mt-3">
+          <div class="card-header">List of Files</div>
+          <ul
+            class="list-group list-group-flush"
+            *ngFor="let file of fileInfos | async"
+          >
+            <li class="list-group-item">
+              <a href="{{ file.url }}">{{ file.name }}</a>
+            </li>
+          </ul>
+        </div>
+
+
+
+      </div> -->
+
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

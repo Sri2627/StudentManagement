@@ -1,0 +1,126 @@
+
+ 
+<div class="container-fluid"  >
+  <div class="row">
+ 
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+     
+   
+
+      
+      <div class="table-responsive">
+        
+              <div class="inner-adjust">
+                             
+        <div class="d-flex justify-content-between">
+          <div>
+            <h2> CSV Upload</h2>
+          </div>
+          <div>
+      
+            
+            <button  id="eventbutton" class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#events">
+              <i class="fas fa-plus"></i>Add Event
+            </button>
+          
+      
+           </div>
+      </div>
+           
+      <hr/><!-- table-->
+
+ 
+      <div class="container">
+  
+        <div class="card">
+          <div class="card-header">
+            Upload csv to read  {{this.nextadmissionno }}
+          </div>
+          <div class="card-body">
+           
+            <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" multiple (change)="uploadListener($event)"  accept="image/*,.csv"  /><br/>
+            
+            <br/>
+            <button   (click)=" Uploadstudents(csvRecordsArray,headerLength)" type ="button" class="btn btn-primary"
+               >Upload</button> &nbsp;
+      
+              <a href="javascript:;" *ngIf="records.length > 0" (click)="fileReset()" class="btn btn-danger">Reset </a>
+          </div>
+        </div>
+       
+      
+        <div class="alert alert-warning" *ngIf="isSignUpFailed">
+          Signup failed!<br />{{ errorMessage }}
+        </div>
+      <!-- <a href="javascript:;" *ngIf="records.length > 0" (click)="getJsonData()" class="btn btn-primary">Convert Json </a> -->
+       
+        
+      
+      {{jsondatadisplay}}
+        <table class="table"  *ngIf="records.length > 0">
+          <thead class="thead-dark" >
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Rollno</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Email</th>
+              <th scope="col">Address</th>
+              <th scope="col">Standard</th>
+              <th scope="col">Section</th>
+              <th scope="col">Photourl</th>
+      
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of records;let i = index;">
+              <th scope="row">{{record.id}}</th>
+              <td>{{record.admissionno}}</td>
+              <td>{{record.fullname}}</td>
+              <td>{{record.mobile}}</td>
+              <td>{{record.email}}</td>
+              <td>{{record.address}}</td>
+              <td>{{record.standard}}</td>
+              <td>{{record.section}}</td>
+           
+
+         
+              <td>    <img   id="currentPhoto" src="{{record.photourl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="40px" height="50px"></td>  
+      
+              
+          
+            </tr>
+        
+          </tbody>
+        </table>
+      </div>
+         
+
+      
+      <ng-template #loggedOut>
+        Please login.
+      </ng-template>
+              </div>
+          
+      </div>
+    </main>
+  
+
+</div>
+</div>
+
+
+
+ 
+         
+             
+         
+    
+              <!-- table-->
+                 
+                     
+          <!-- Modal -->
+      
+
+ 

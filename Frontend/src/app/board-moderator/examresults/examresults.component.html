@@ -1,0 +1,279 @@
+ 
+
+  <div class="container-fluid"  >
+    <div class="row">
+     
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+       
+     
+
+        
+        <div class="table-responsive">
+          
+                <div class="inner-adjust">
+                               
+          <div class="d-flex justify-content-between">
+            <div>
+              <h2>  Result</h2>
+            </div>
+            <div>
+        
+              
+            
+                     
+             
+
+              <button  class="btn btn-success "   (click)="setrank()"> 
+                <i class="fas fa-plus"></i>Set Rank
+              </button> &nbsp;
+
+
+<!--                
+                  <button  class="btn btn-primary btn-danger"  (click)="removeAllTutorials()">
+                    <i class="fas fa-trash"></i> Remove All
+                  </button>   -->
+        
+             </div>
+        </div>
+             
+        <hr/><!-- table-->
+
+        <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+          <div>
+          <div class="d-flex justify-content-between"> 
+
+          <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+
+          <div>             
+
+          <button  style=" margin-left:10px;" class="btn btn-primary " (click)="exportExcel()"  >
+          <i class="fa fa-download"></i>Download CSV 
+          </button>  
+          </div>
+
+          <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+          <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+          </div>
+          </div>
+
+          <div>
+          <div>
+
+          <div>  
+          </div>        
+          <div class="d-flex justify-content-between">
+          <div><label for="cars">Records per page : &nbsp;</label></div>
+          <div>  <select (change)="onTableSizeChange($event)"> 
+          <option *ngFor="let size of tableSizes"> {{size}}</option>
+          </select></div>  
+
+          </div>
+          </div>  
+          </div>
+          </div>
+
+
+
+
+
+          <div class="data">
+            <div  >
+
+
+              <!-- <ul class="list-group list-group-flush"  *ngFor="let stu of currentResultdata |filter:searchterm    let i = index">
+                <li class="list-group-item" style="margin-top: 10px;"  ><button type="button" class="btn btn-outline-primary"   >{{stu.examtitle}}-{{stu.subject}}  </button> </li>
+            
+
+           
+
+
+              </ul> -->
+
+
+
+ 
+              <table class="table table-striped table-light" id="download">
+                <thead class="table-dark">
+                <tr>
+                    
+                    <th scope="col"> studentid </th>
+                    
+                    <th scope="col"> rank </th>
+                    <th scope="col"> photo </th>
+                    <th scope="col"> studentname </th>
+                    <th scope="col"> totalmarks </th>
+                    <th scope="col"> marksobtained</th>
+                    <th scope="col">is_attended</th>
+                    <th scope="col">ispassed</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                   
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of currentResultdata |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}let i = index">
+                   
+                    <td> {{item.admissionno}}</td>
+                    <td> {{item.examtitle}}</td>
+                    <td> {{item.subject}}</td>
+                    <td ><img   id="currentPhoto" src="{{item.attachmenturl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="30px" height="30px"></td>
+                     <td> {{item.studentname}}</td>
+                     <td> {{item.totalmarks}}</td>
+                     <td> {{item.marksobtained}}</td>
+                     <td> {{item.is_attended}}</td>
+                     <td> {{item.ispassed}}</td>
+      
+               
+                <td>
+      
+                <button type ="button" class="btn btn-outline-primary"
+                data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>&nbsp;
+      
+       
+                <button type ="button" class="btn btn-outline-danger" (click)="deleterank(item.id)"
+                >Delete</button>&nbsp;
+      
+                </td>
+      
+                </tr>
+                </tbody>
+      
+      
+                </table>
+             
+
+  
+          </div>
+          
+
+          <div class="d-flex justify-content-between">
+              <div>
+                <h2> </h2>
+              </div>
+              <div>
+        
+                  <!-- <button  class="btn btn-outline-primary  btn-lg"  data-bs-toggle="modal" >
+                      <i class="fa fa-calculator"></i> Total : {{total}}   
+                    </button>
+                  &nbsp;
+                    <button  class="btn btn-primary btn-lg"  data-bs-toggle="modal">
+                      <i class="fa fa-truck"></i> Order  
+                    </button> -->
+                    
+          
+               </div>
+            </div>
+               
+          <div>
+
+          </div> 
+
+
+           
+
+
+
+          </div>
+          <pagination-controls
+          previousLabel=" Prev"
+          nextLabel="Next"
+
+          (pageChange)="onTableDataChange($event)"></pagination-controls>
+          <!-- table-->
+                 
+
+          
+        
+                 
+        <ng-template #loggedOut>
+          Please login.
+        </ng-template>
+                </div>
+            
+        </div>
+      </main>
+    </div>
+    </div>
+
+ <!-- Message -->
+
+ 
+<!-- Modal -->
+<div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Messages</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="submit-form">
+          <div *ngIf="!submitted">
+
+              <!-- <div class="form-group">
+                <label for="customerid">id</label>
+                <input   
+                  type="text"
+                  class="form-control"
+                  id="customerid"
+                  required
+                  [(ngModel)]="tutorial.customerid"
+                  name="customerid"
+                
+                  value = "{{ currentUser.id }}"
+                />
+              </div>   -->
+
+
+            <div class="form-group">
+              <label for="title">Subject</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                required
+                [(ngModel)]="tutorial.title"
+                name="title"
+              />
+            </div>
+      
+            <div class="form-group">
+              <label for="description">Message</label>
+            
+              <textarea 
+              type="text"
+              class="form-control"
+              id="description"
+              required
+              [(ngModel)]="tutorial.description"
+              name="description"
+               rows="4"></textarea>
+
+            </div>
+        
+
+
+    
+            <!-- <button (click)="sendmessage()" class="btn btn-success">Submit</button> -->
+          </div>
+      
+          <div *ngIf="submitted">
+            <h4>Message sent successfully!</h4>
+           
+          </div>
+        </div>
+
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

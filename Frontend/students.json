@@ -1,0 +1,203 @@
+{
+  "Students": [
+    {
+      "id": 1,
+      "name": "vivek",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9892870745",
+      "fees": "25000",
+      "location": "chennai central",
+      "photourl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=761&q=80"
+    },
+    {
+      "id": 2,
+      "name": "sirkanth",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "25000",
+      "location": "koddmabakkam",
+      "photourl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": 3,
+      "name": "suman",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "12111",
+      "location": "meenambakkam",
+      "photourl": "https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
+    },
+    {
+      "id": 4,
+      "name": "vivek",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9892870745",
+      "fees": "25000", 
+      "location": "chennai central",
+      "photourl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=761&q=80"
+    },
+    {
+      "id": 5,
+      "name": "bharath",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "25000",
+      "location": "avadi",
+      "photourl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    },
+    {
+      "id": 6,
+      "name": "chankaya",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "12111",
+      "location": "arambakkam",
+      "photourl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    },
+    {
+      "id": 7,
+      "name": "pavani",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9892870745",
+      "fees": "25000",
+      "location": "nellore",
+      "photourl": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    },
+    {
+      "id": 8,
+      "name": "venkat",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "25000",
+      "location": "nellore",
+      "photourl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+    },
+    {
+      "id": 10,
+      "name": "jaya",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9892870745",
+      "fees": "25000",
+      "location": "kavali",
+      "photourl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80"
+    },
+    {
+      "id": 11,
+      "name": "ramu",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "25000",
+      "location": "kavali",
+      "photourl": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=689&q=80"
+    },
+    {
+      "id": 12,
+      "name": "ramesh",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "12111",
+      "location": "kavali",
+      "photourl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    },
+    {
+      "id": 13,
+      "name": "anitha",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9892870745",
+      "fees": "25000",
+      "location": "ongole",
+      "photourl": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=689&q=80"
+    },
+    {
+      "id": 14,
+      "name": "varamma",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "25000",
+      "location": "ongole",
+      "photourl": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=689&q=80"
+    },
+    {
+      "id": 15,
+      "name": "lohita",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "12111",
+      "location": "hyderabad",
+      "photourl": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=689&q=80"
+    },
+    {
+      "id": 16,
+      "name": "sai",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9892870745",
+      "fees": "25000",
+      "location": "hydearabad",
+      "photourl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    },
+    {
+      "id": 17,
+      "name": "venu",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "25000",
+      "location": "nellore",
+      "photourl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    },
+    {
+      "id": 18,
+      "name": "test17",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "12111",
+      "location": "arambakkam",
+      "photourl": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=689&q=80"
+    },
+    {
+      "id": 19,
+      "name": "wqw",
+      "email": "qeqe",
+      "mobile": "qweq",
+      "fees": "qwe",
+      "location": "qwe",
+      "photourl": ""
+    },
+    {
+      "id": 20,
+      "name": "test",
+      "email": "srikanthnaidu2627@gmail.com",
+      "mobile": "9895070152",
+      "fees": "2344",
+      "location": "234234",
+      "photourl": ""
+    },
+    {
+      "id": 21,
+      "name": "qqqq",
+      "email": "qqq@gmail.com",
+      "mobile": "9892870745",
+      "fees": "789",
+      "location": "asfsfsdf",
+      "photourl": ""
+    }
+  ],
+  "signupUsers": [
+    {
+      "fullname": "sriknath",
+      "mobile": "9892870745",
+      "email": "srikanth.naidu@holopundits.com",
+      "password": "Abcd123",
+      "id": 1
+    },
+    {
+      "fullname": "test",
+      "mobile": "9895070152",
+      "email": "srikanthnaidu2627@gmail.com",
+      "password": "123456",
+      "id": 2
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

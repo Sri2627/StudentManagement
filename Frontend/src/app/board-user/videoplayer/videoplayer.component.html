@@ -1,0 +1,96 @@
+ 
+
+
+  <div class="container-fluid" >
+    <div class="row">
+ 
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+       
+     
+
+        
+        <div class="table-responsive">
+          
+                <div class="inner-adjust">
+          
+
+
+
+              <div class="d-flex justify-content-between">
+              <div>
+              <h2>Video - {{chaptertitle}}</h2>
+              </div>
+              <div>
+
+
+
+              </div>
+              </div>
+
+              <hr/>
+
+     
+ <div>
+
+  <div id="main">
+
+
+    <div class="alert alert-danger" *ngIf="!hasresult">
+
+        <h5>This subject doesnt have any videos.</h5>
+    
+        </div>
+
+
+        <div  *ngIf="hasresult">
+
+          
+                    <div class="row">
+                        
+                    
+                        <div class="col-sm-2">    
+                            
+                            <ul class="list-group list-group-flush"  *ngFor="let stu of mysyllabus  let i = index">
+
+
+                            <li  style="margin-top: 10px;    list-style-type: none;"  >
+                            
+                                <button type="button" class="btn btn-primary"  (click)="getmychapter(stu.id)"  >{{stu.chapterno}}    </button> 
+                            
+
+                            </li>
+                        
+                        
+                        </ul></div>
+
+                        <div class="col-sm-7">
+
+                            
+                            <video width="800" oncontextmenu="return false;"  controlsList="nodownload" controls src="{{chaptervidoeurl}}"></video>
+
+                            
+                        </div>
+                        <div class="col-sm-2">  
+                            
+                           
+                             <h5> Attachment </h5>
+ 
+   
+                              
+                           <a href="{{chapterattachment}}"  class="btn btn-warning"   target="_blank">  <i class="fas fa-download"></i> Download</a>  
+                        </div>
+                    </div>
+          </div>
+
+
+    </div>
+
+
+
+
+
+    
+ 
+
+
+ 

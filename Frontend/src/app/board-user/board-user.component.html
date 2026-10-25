@@ -1,0 +1,526 @@
+ 
+  <div class="container-fluid"   >
+    <div class="row" >
+   
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" >
+        <div class="dashboard-ecommerce">
+          <div class="container-fluid dashboard-content ">
+              <!-- ============================================================== -->
+              <!-- pageheader  -->
+              <!-- ============================================================== -->
+              
+              <div class="d-flex justify-content-between">
+                <div>
+                <h2>Welcome,  {{currentUser.fullname | titlecase}}</h2>
+                </div>
+                <div>
+                <button   type ="button" class="btn btn-primary"
+                data-bs-toggle="modal" data-bs-target="#password">Change Password</button> 
+    
+    
+                </div>
+                </div>
+              <hr/>    
+              <!-- ============================================================== -->
+              <!-- end pageheader  -->
+              <!-- ============================================================== -->
+
+              <div  >
+                  <div >
+                      <div class="card"   class="customgradient" >
+                          <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                              <div>
+                                <h5 class="card-title" style="color:#fff">Welocme to XRGuru,</h5>
+                                <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                                <p class="card-text"> All your activities willbe listed here.</p>
+                              
+                                <button   type ="button" class="btn btn-light"
+                                data-bs-toggle="modal" data-bs-target="#viewModal">Change Photo</button>  &nbsp;
+
+                                <a href="#"  routerLink="/profile/{{currentUser._id}}"  target="_blank" class="btn btn-primary"  > Profile</a> &nbsp;
+
+                              </div>
+                              <div >
+                                <div class="d-flex justify-content-between">
+                               
+                                  <div style="padding: 10px;">
+                                    <img class="card-img-top"  id="currentPhoto" src="{{currentUser.photourl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="50" height="60"> 
+              
+                                   
+              
+                                   
+                                  </div>
+                                  </div>
+                               
+                                
+                    
+                  
+                              </div>
+                              </div>
+                            
+                        
+                          </div>
+                          </div>
+                  </div>
+              </div>
+<br>
+
+              <div class="ecommerce-widget">
+
+                  <!-- <div class="row">
+                      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h5 class="text-muted"> Teachers     </h5>
+                                  <div class="metric-value d-inline-block">
+                                      
+                                  </div>
+                                  <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                     <span>  <a href="/teachers"  class="btn btn-primary">Go to Teachers</a></span>
+                                  </div>
+                              </div>
+                              <div id="sparkline-revenue"></div>
+                          </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h5 class="text-muted">Students</h5>
+                                  <div class="metric-value d-inline-block">
+                                      
+                                  </div>
+                                  <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                    <span>  <a href="/userlist" class="btn btn-success">Go to Students</a></span>
+                                  </div>
+                              </div>
+                              <div id="sparkline-revenue2"></div>
+                          </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h5 class="text-muted"> Subjects  </h5>
+                                  <div class="metric-value d-inline-block">
+                                
+                                  </div>
+                                  <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                      <span><a href="/subjects" class="btn btn-secondary">Go to Subjects</a></span>
+                                  </div>
+                              </div>
+                              <div id="sparkline-revenue3"></div>
+                          </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h5 class="text-muted">   Sections </h5>
+                                  <div class="metric-value d-inline-block">
+                                     
+                                  </div>
+                                  <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                                      <span> <a href="/sections" class="btn btn-warning">Go to Sections </a></span>
+                                  </div>
+                              </div>
+                              <div id="sparkline-revenue4"></div>
+                          </div>
+                      </div>
+                  </div> -->
+                  <div class="row">
+                      <!-- ============================================================== -->
+                
+                      <!-- ============================================================== -->
+
+                                    <!-- recent orders  -->
+                      <!-- ============================================================== -->
+                      <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                        <div class="card"  >
+                          <div class="card-body">
+                            <h5 class="card-title">My Account Details </h5>
+                            <hr/>
+                            <div class="table-responsive"  style="height: 365px;">
+                                     
+                                    
+                                    <div class="flex-item-right">
+          
+                                      <form [formGroup] ="stundentform">
+                                        <div class="container">
+                                          <div class="row">
+                                            <div class="col">
+                                              <label class="form-label" >Name</label>
+                                              <input type="text" class="form-control" formControlName="fullname">
+                                            </div>
+                                            <div class="col">
+                                              <label class="form-label">Email</label>
+                                              <input type="email" class="form-control" formControlName="email">
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col">
+                                              <label class="form-label">Phone</label>
+                                              <input type="text" class="form-control" formControlName="mobile">
+                                            </div>
+                                            <div class="col">
+                                              <label class="form-label">Address</label>
+                                              <input type="text" class="form-control" formControlName="address">
+                                            </div>
+                                          </div>
+
+                                          <div class="row">
+                                            <div class="col" > 
+                                              <label class="form-label">Admission No</label>   
+                                              <input type="text" disabled="disabled"  value={{currentUserdata.admissionno}} class="form-control"  >
+                                            </div>
+                                            <div class="col">
+                                              <label class="form-label">Section</label> 
+                                              <input type="text" disabled="disabled"  value={{currentUserdata.section}} class="form-control"  >
+                                            </div>
+                                          </div>
+
+                                        </div>
+
+                                        <br/> 
+                                        <button type="button" style="margin-left:15px"  (click)="updateStudentDetails()" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                        </form>
+                                         
+                                      </div>
+                                 
+                                 
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- ============================================================== -->
+                      <!-- end recent orders  -->
+
+
+                      <!-- ============================================================== -->
+                      <!-- ============================================================== -->
+                      <!-- customer acquistion  -->
+                      <!-- ============================================================== -->
+                      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <div class="card">
+                              <h5 class="card-header">Calendar</h5>
+                              <div class="card-body"  >
+                                  <div class="ct-chart ct-golden-section" style="height: 330px;">
+                                      <full-calendar [options]="calendarOptions"  data-bs-toggle="modal" data-bs-target="#currentevent" ></full-calendar>
+
+                                  </div>
+                               
+                              </div>
+                          </div>
+                      </div>
+                      <!-- ============================================================== -->
+                      <!-- end customer acquistion  -->
+                      <!-- ============================================================== -->
+                  </div>
+                  <div class="row">
+                    <!-- ============================================================== -->
+              
+                    <!-- ============================================================== -->
+
+                                  <!-- recent orders  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                      <div class="card" style="height: 385px;">
+                        <div class="card-body">
+                          <h5 class="card-title">Marks </h5>
+                           <hr/>
+                          <div class="d-flex justify-content-between">
+                            <div class="row">
+                              <div class="col" style="padding: 10px;">                             <button   type ="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#marklist" (click)="getmyresults('Unitexam')"> Unit Marklist</button> 
+                              </div>
+                              <div class="col" style="padding: 10px;">                            <button   type ="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#marklist" (click)="getmyresults('Quaterlyexam')"> Quaterly Marklist</button> 
+                              </div>
+                              <div class="col" style="padding: 10px;">                            <button   type ="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#marklist" (click)="getmyresults('Halfyearexam')"> Halfyearly Marklist</button> 
+                              </div>
+                              <div class="col" style="padding: 10px;">                            <button   type ="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#marklist"(click)="getmyresults('Annualexam')"> Annul exam MarkList</button> 
+                              </div>
+                            </div>
+                            
+        
+                            <div>
+                           
+                            </div>
+                            <div>
+                       
+                 
+                            </div>
+                            </div>
+                          
+        
+                         
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end recent orders  -->
+
+
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- customer acquistion  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                      <div class="card">
+                        <h5 class="card-header">Top Events</h5>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                              <table class="table no-wrap p-table"  style="margin-top: 10px; height: 328px;"id="download">
+                                    <thead class="bg-light">
+                                    <tr>
+                                      <th scope="col"> Date </th>
+                                        <th scope="col"> Event </th>
+                                     
+                                        
+                                        <th scope="col">  </th>
+                                     
+                          
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let tutorial of currenteventdata ">
+                                      <td> {{tutorial.date}}</td>
+                                        <td> {{tutorial.title}}</td>
+                       
+                                       
+                                         
+                          
+                                   
+                                    <td>
+                          
+                                    <!-- <button type ="button" class="btn btn-outline-primary"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>&nbsp;
+                          
+                          
+                                    <button type ="button" class="btn btn-outline-danger" (click)="deleteevent(tutorial.id)"
+                                    >Delete</button>&nbsp; -->
+                          
+                                    </td>
+                          
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <a href="#" class="btn btn-outline-light float-right">Details</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end customer acquistion  -->
+                    <!-- ============================================================== -->
+                </div>
+
+                  
+         <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <div class="footer">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                       Copyright © 2018 xrguru. All rights reserved.  
+                  </div>
+                   
+              </div>
+          </div>
+      </div>
+      <!-- ============================================================== -->
+      <!-- end footer -->
+      <!-- ============================================================== -->
+
+
+        
+                 
+             
+                   
+              </div>
+          </div>
+      </div>
+     
+
+ 
+      </main>
+    
+ 
+          </div>
+        </div>
+
+ 
+        
+
+<!-- Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Images</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      
+ 
+        <div class="d-flex align-content-stretch flex-wrap">
+          <div class="card" style="width: 16rem; margin: 12px;" 
+          *ngFor="let stu of fileData  |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+                 
+          <div class="card-body"  >
+       
+            <!-- <p class="card-text"> {{stu._id|titlecase}}</p>
+            <p class="card-text"> {{stu.username|titlecase}}</p> -->
+            
+    
+            <div class="row">
+              <div class="col-sm-4" > <div *ngIf="stu.is_folder" >  <img src="../../assets/folder.png" width="40px" (click)="getmychildren(stu.id)" /> </div> <a href="{{stu.fileurl}}" target="_blank"><img src={{stu.fileurl}} width="40px"/></a></div>
+              <div class="col-sm-8">   <h6 class="card-title">  {{stu.foldername | titlecase}}  </h6>  </div>
+  
+              
+            </div>
+            Size : {{stu.size/1000000}}  MB
+            </div>
+  
+            
+          
+          <div class="card-footer">
+           
+           
+   
+           <button (click)="getmyfiledetails(stu.id)" type ="button" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#viewModal" style="margin-left: 5px;">Change</button>&nbsp;
+          <!--
+          <button type ="button" class="btn btn-outline-danger" (click)="deletefile(stu.id)"
+          ><i class="fas fa-trash"></i></button>&nbsp;
+          <button type ="button" class="btn btn-outline-success"   (click)="getdetails(stu.foldername)"
+          ><i class="fas fa-plus"></i></button>&nbsp; -->
+          
+   
+          </div>
+                
+          </div>
+         
+        </div>
+
+ 
+      
+      </div>
+      
+      <div>
+
+        
+       
+      
+      <div class="modal-footer">
+
+     
+
+        
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+<!-- Password -->
+<div class="modal fade" id="password" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+         
+    
+        <form [formGroup] ="stundentform">
+       
+          <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password">
+          </div>
+        
+          <button type="button"  (click)="updateStudentDetails()" class="btn btn-primary" data-dismiss="modal">Update</button>
+          </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+    
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- marklist -->
+
+  
+<div class="modal fade" id="marklist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mark List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      
+  
+        <table class="table table-condensed" style="width:100%" style=" font-family: 'Courier New', Courier, monospace;" style="border:1px solid black;  border-collapse: collapse;">
+          <thead>
+                <tr style="border:1px solid black;width:25%" >
+              <td style="border:1px solid black;width:25%; font-family: 'Courier New', Courier, monospace;"  ><strong>&nbsp;Exam</strong></td>
+                <td style="border:1px solid black;width:25%; font-family: 'Courier New', Courier, monospace;"><strong>&nbsp;Subject</strong></td>
+                <td style="border:1px solid black;width:20%; font-family: 'Courier New', Courier, monospace;"><strong>&nbsp;Total Marks</strong></td>
+                <td style="border:1px solid black;width:20%; font-family: 'Courier New', Courier, monospace;"><strong>&nbsp;Marks obtained</strong></td>
+                <td style="border:1px solid black;width:15%; font-family: 'Courier New', Courier, monospace;"><strong>&nbsp;Percentage </strong></td>
+                
+                          </tr>
+          </thead>
+          <tbody>
+            
+            <tr   *ngFor="let stu of currentResultdata">
+              <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"> &nbsp;<strong>{{stu.examtitle}}</strong></td>
+              <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"> &nbsp;{{stu.subject}}</td>
+              <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;"> &nbsp;{{stu.totalmarks}} </td>
+              <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;" >&nbsp; {{stu.marksobtained}}</td>
+              <td style="border:1px solid black;font-family: 'Courier New', Courier, monospace;">  &nbsp;  {{ stu.marksobtained/stu.totalmarks | percent:'2.0-2' }}</td>
+        
+            </tr>
+                          
+          
+        
+            <tr>
+              <td style="border:1px solid black;">  </td> 
+              <td style="border:1px solid black; font-family: 'Courier New', Courier, monospace;"> &nbsp;<strong>Total</strong> </td>
+              <td style="border:1px solid black; font-family: 'Courier New', Courier, monospace;"> &nbsp;<strong>{{total}} </strong> </td>
+              <td style="border:1px solid black; font-family: 'Courier New', Courier, monospace;">  &nbsp;&nbsp;<strong>{{totalmarks}}</strong> </td>
+              <td style="border:1px solid black; font-family: 'Courier New', Courier, monospace;"> &nbsp;<strong>  {{ totalmarks/total | percent:'2.0-2' }}</strong> </td>
+            
+            </tr>
+
+            
+          </tbody>
+        </table>
+
+      
+      </div>
+      
+      <div>
+ 
+      
+      <div class="modal-footer">
+   
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

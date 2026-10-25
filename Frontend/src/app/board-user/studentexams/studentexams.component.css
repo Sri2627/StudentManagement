@@ -1,0 +1,29 @@
+ 
+
+.btn-close{
+
+  background-color: #fff!important;
+  border: none !important;
+  font-size: 30px!important;
+  }
+  
+
+  .customgradient {
+    /* fallback for old browsers */
+    background: #b44593;
+    color: #ffffff;
+    border-radius: 10px;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #b44593, #b44593, #b44593, #b44593);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #b44593, #b44593, #b44593, #b44593);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    
+    }
+    }

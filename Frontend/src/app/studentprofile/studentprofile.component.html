@@ -1,0 +1,219 @@
+       <section class="vh-100" style="background-color: #508bfc;">
+        <br/><br/><br/>
+
+        <div  class="bg">
+            <div class="container emp-profile" >
+              <form method="post">
+                  <div class="row">
+                      <div class="col-md-4">
+                          <div class="profile-img">
+                              <img src="{{profileData.photourl}}" onerror="this.onerror=null; this.src='../assets/noimage.jpg'" alt=""/>
+                              <div class="file btn btn-lg btn-primary">
+                                {{profileData.admissionno |titlecase}} - {{profileData.fullname |titlecase}}
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6" >
+                          <div class="profile-head">
+                                      <h5>
+                                        {{profileData.admissionno |titlecase}} - {{profileData.fullname |titlecase}}
+                                      </h5>
+                                      <h5 style="text-transform: uppercase;">
+                                          {{profileData.section |titlecase}}
+                                      </h5>
+                                      <p class="proile-rating">RANKINGS : <span> <ul class="list-group list-group-flush"  *ngFor="let stu of currentexamresult     let i = index">
+                                        <li class="list-group-item" style="margin-top: 10px;"  > {{stu.rank}}/{{stu.totalattended}}   </li>
+                                     
+                                      </ul> </span></p>
+
+                                     
+
+
+                              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                  <li class="nav-item">
+                                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link  " id="home-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link  " id="home-tab" data-toggle="tab" href="#examresults" role="tab" aria-controls="examresults" aria-selected="true">Exam Results</a>
+                                </li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="col-md-2">
+                       <!-- //   <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/> -->
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-4">
+                          <div class="profile-work">
+                                <p>PERSONAL LINKS</p>
+                              <a href="">Instagram</a><br/>
+                              <a href="">facebook</a><br/>
+                             
+                              <p>SKILLS</p>
+                              <a href="">Dancer</a><br/>
+                              <a href="">Football Player</a><br/>
+                              <a href="">Chess</a><br/>
+                              <p>HOBBIES</p>
+                              <a href=""> Stamp Collection</a><br/>
+                              <a href=""> Old Coid Collection</a><br/>  
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="tab-content profile-tab" id="myTabContent">
+                              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>User Id</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  {{profileData.username |titlecase}}
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Name</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  {{profileData.fullname |titlecase}}
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Email</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  {{profileData.email }}
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Phone</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                {{profileData.mobile }}
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Address:</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                {{profileData.address }}
+                                              </div>
+                                          </div>
+                              </div>
+                              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Experience</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>Expert</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Hourly Rate</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>10$/hr</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Total Projects</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>230</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>English Level</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>Expert</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Availability</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>6 months</p>
+                                              </div>
+                                          </div>
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <label>Your Bio</label><br/>
+                                          <p>Your detail description</p>
+                                      </div>
+                                  </div>
+                              </div>
+        
+                              <div class="tab-pane fade" id="examresults" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Experience</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Hourly Rate</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>10$/hr</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Total Projects</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>230</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>English Level</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Availability</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>6 months</p>
+                                    </div>
+                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Your Bio</label><br/>
+                                <p>Your detail description</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                          </div>
+                      </div>
+        
+        
+                      
+                  </div>
+              </form>           
+          </div>
+          </div>
+
+
+      </section>

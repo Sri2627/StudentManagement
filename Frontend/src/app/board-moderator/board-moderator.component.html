@@ -1,0 +1,181 @@
+  
+<div class="container-fluid" style="margin-top: 35px;">
+  <div class="row">
+ 
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+     
+   
+
+      
+      <div class="table-responsive">
+        
+              <div class="inner-adjust">
+                             
+        <div class="d-flex justify-content-between">
+          <div>
+            <h2>My Account</h2>
+          </div>
+          <div>
+      
+            
+            <button  id="eventbutton" class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#events">
+             Change Password
+            </button>
+          
+      
+           </div>
+      </div>
+           
+      <hr/><!-- table-->
+
+    
+     
+    
+        <div class="flex-container">
+          <div class="flex-item-left"> 
+          <div class="card" style="width: 16rem; margin: 12px;"> 
+                     
+            <img class="card-img-top"  id="currentPhoto" src="{{currentUser.photourl}}" onerror="this.onerror=null; this.src='../../assets/noimage.jpg'" alt="" width="50" height="60">
+            <!-- <img class="card-img-top"  id="currentPhoto" src="{{currentUser.photourl}}" onerror="this.onerror=null; this.src=' ../../assets/noimage.jpg'" alt="" width="50" height="60"> -->
+            <div class="card-body"  id="download">
+            <h5 class="card-title">  {{currentUser.fullname | titlecase}} - <span class="uppercase">{{currentUser.section}} </span> </h5>
+            <!-- <p class="card-text"> {{stu._id|titlecase}}</p>
+            <p class="card-text"> {{stu.username|titlecase}}</p> -->
+            <p class="card-text"> {{currentUser.admissionno|titlecase}}</p>
+            </div>
+            <div class="card-footer">
+          <!-- <a href="#"  routerLink="/profile/{{currentUser._id}}"  target="_blank" class="btn btn-primary" style="margin-right: 5px;"> Profile</a>  -->
+           
+           <button   type ="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#viewModal">Change Picture</button> 
+          
+          
+            </div>
+                  
+            </div>
+          
+          </div>
+          <div class="flex-item-right">
+          
+          <form [formGroup] ="stundentform">
+            <div class="mb-3">
+            <label class="form-label" >Name</label>
+            <input type="text" class="form-control" formControlName="fullname">
+            </div>
+            <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email">
+            </div>
+            <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" formControlName="mobile">
+            </div>
+            <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" formControlName="address">
+            </div>
+            <button type="button"  (click)="updateStudentDetails()" class="btn btn-primary" data-dismiss="modal">Update</button>
+            </form>
+             
+          </div>
+          </div>
+      
+         
+
+      
+      <ng-template #loggedOut>
+        Please login.
+      </ng-template>
+              </div>
+          
+      </div>
+    </main>
+  
+
+</div>
+</div>
+
+
+
+
+
+
+
+        
+
+<!-- Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Images</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      
+ 
+        <div class="d-flex align-content-stretch flex-wrap">
+          <div class="card" style="width: 16rem; margin: 12px;" 
+          *ngFor="let stu of fileData  |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+                 
+          <div class="card-body"  >
+       
+            <!-- <p class="card-text"> {{stu._id|titlecase}}</p>
+            <p class="card-text"> {{stu.username|titlecase}}</p> -->
+            
+    
+            <div class="row">
+              <div class="col-sm-4" > <div *ngIf="stu.is_folder" >  <img src="../../assets/folder.png" width="40px" (click)="getmychildren(stu.id)" /> </div> <a href="{{stu.fileurl}}" target="_blank"><img src={{stu.fileurl}} width="40px"/></a></div>
+              <div class="col-sm-8">   <h6 class="card-title">  {{stu.foldername | titlecase}}  </h6>  </div>
+  
+              
+            </div>
+            Size : {{stu.size/1000000}}  MB
+            </div>
+  
+            
+          
+          <div class="card-footer">
+           
+           
+   
+           <button (click)="getmyfiledetails(stu.id)" type ="button" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#viewModal" style="margin-left: 5px;">Change</button>&nbsp;
+          <!--
+          <button type ="button" class="btn btn-outline-danger" (click)="deletefile(stu.id)"
+          ><i class="fas fa-trash"></i></button>&nbsp;
+          <button type ="button" class="btn btn-outline-success"   (click)="getdetails(stu.foldername)"
+          ><i class="fas fa-plus"></i></button>&nbsp; -->
+          
+   
+          </div>
+                
+          </div>
+         
+        </div>
+
+ 
+      
+      </div>
+      
+      <div>
+
+        
+       
+      
+      <div class="modal-footer">
+
+     
+
+        
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+

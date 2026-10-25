@@ -1,0 +1,514 @@
+<!--  
+ 
+
+<header class="header" id="header" *ngIf="isLoggedIn">
+  <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+ 
+   <a href class="nav-link" (click)="logout()">LogOut</a>
+</header>
+<div class="l-navbar" id="nav-bar" *ngIf="isLoggedIn">
+  <nav class="nav">
+      <div>
+        
+      <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">XR GURU</span> </a>
+          <div class="nav_list" *ngIf="showAdminBoard">
+            
+            
+            
+            
+              <a class="nav_link" routerLink="/admin">                 <i class="fa fa-university" aria-hidden="true"></i>               Dashboard              </a>
+              <a class="nav_link" routerLink="/admincalendar">                 <i class="fa fa-calendar" ></i>Calendar              </a>
+              <a class="nav_link" routerLink="/teachers">                <i class="fas fa-users"></i>Teachers              </a>
+               <a class="nav_link" routerLink="/userlist">                <i class="fas fa-user"></i>Students              </a>
+              <a class="nav_link" routerLink="/csvupload">                <i class="fa fa-upload" aria-hidden="true"></i>Csvupload              </a>
+              <a class="nav_link" routerLink="/sections">                <i class="fa fa-folder" aria-hidden="true"></i>                Sections              </a>
+              <a class="nav_link" routerLink="/subjects">                <i class="fa fa-laptop" aria-hidden="true"></i>                Subjects              </a>
+              <a class="nav_link" routerLink="/syllabus">                <i class="fa fa-graduation-cap" aria-hidden="true"></i>                Syllabus              </a>
+              <a class="nav_link " routerLink="/examtitles">                <i class="fa fa-question" aria-hidden="true"></i>examtitles              </a>
+              <a class="nav_link" routerLink="/resultchart">                <i class="fa fa-cubes" aria-hidden="true"></i>Results              </a>
+              <a class="nav_link" routerLink="/adminfiles">                <i class="fa fa-archive" aria-hidden="true"></i>File Box              </a>
+         
+                 </div>
+      </div> <a href="#" class="nav_link" (click)="logout()"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
+  </nav>
+</div>
+ <div class="height-100">
+  <router-outlet></router-outlet>
+      
+</div>
+
+          -->
+     
+
+
+          <div class="dashboard-main-wrapper">
+            <!-- ============================================================== -->
+            <!-- navbar -->
+            <!-- ============================================================== -->
+            <div class="dashboard-header" *ngIf="isLoggedIn">
+                <nav class="navbar navbar-expand-lg  customgradient fixed-top" >
+                    <a class="navbar-brand" href="index.html"> <h2 style="color: #FFF !important;">  XR GURU</h2> </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto navbar-right-top">
+                            <li class="nav-item">
+                                <div id="custom-search" class="top-search-bar">
+                                    <input class="form-control" type="text" placeholder="Search..">
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown notification">
+                                <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell" style="color: #fff !important;"></i> <span class="indicator"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
+                                    <li>
+                                        <div class="notification-title"> Notification</div>
+                                        <div class="notification-list">
+                                            <div class="list-group">
+                                                <a href="#" class="list-group-item list-group-item-action active">
+                                                    <div class="notification-info">
+                                                        <div class="notification-list-user-img"><img src="assets/images/avatar-2.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                        <div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>accepted your invitation to join the team.
+                                                            <div class="notification-date">2 min ago</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="#" class="list-group-item list-group-item-action">
+                                                    <div class="notification-info">
+                                                        <div class="notification-list-user-img"><img src="assets/images/avatar-3.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                        <div class="notification-list-user-block"><span class="notification-list-user-name">John Abraham </span>is now following you
+                                                            <div class="notification-date">2 days ago</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="#" class="list-group-item list-group-item-action">
+                                                    <div class="notification-info">
+                                                        <div class="notification-list-user-img"><img src="assets/images/avatar-4.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                        <div class="notification-list-user-block"><span class="notification-list-user-name">Monaan Pechi</span> is watching your main repository
+                                                            <div class="notification-date">2 min ago</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="#" class="list-group-item list-group-item-action">
+                                                    <div class="notification-info">
+                                                        <div class="notification-list-user-img"><img src="assets/images/avatar-5.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                        <div class="notification-list-user-block"><span class="notification-list-user-name">Jessica Caruso</span>accepted your invitation to join the team.
+                                                            <div class="notification-date">2 min ago</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                  
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown connection">
+                                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th" style="color: #fff !important;"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
+                                    <li class="connection-list">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="assets/images/github.png" alt="" > <span>Github</span></a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="assets/images/dribbble.png" alt="" > <span>Dribbble</span></a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="assets/images/dropbox.png" alt="" > <span>Dropbox</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="assets/images/bitbucket.png" alt=""> <span>Bitbucket</span></a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="assets/images/mail_chimp.png" alt="" ><span>Mail chimp</span></a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="assets/images/slack.png" alt="" > <span>Slack</span></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="conntection-footer"><a href="#">More</a></div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown nav-user" >
+                            <a href class="nav-link" (click)="logout()" style="color: #fff !important;">SignOut</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                 
+                </nav>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end navbar -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- left sidebar -->
+            <!-- ============================================================== -->
+            <div class="nav-left-sidebar sidebar-dark" *ngIf="isLoggedIn">
+                <div class="menu-list">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                          (click)="toggleNavbar()">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav" *ngIf="showAdminBoard">
+                          
+                          <div class="collapse navbar-collapse"
+                          [ngClass]="{ 'show': navbarOpen }">
+                       <ul class="navbar-nav mr-auto flex-column">
+                                <li class="nav-divider">
+                                    Menu
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" routerLink="/admin"> <i class="fa fa-university" aria-hidden="true"></i>  Dashboard  </a>
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/admincalendar">                 <i class="fa fa-calendar" ></i>Calendar              </a>
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/teachers">                <i class="fas fa-users"></i>Teachers              </a>
+                                 </li>
+                                
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/userlist">                <i class="fas fa-user"></i>Students              </a>
+                                 
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/csvupload">                <i class="fa fa-upload" aria-hidden="true"></i>Csvupload              </a>
+                                  
+                                 </li>
+                              
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/sections">                <i class="fa fa-folder" aria-hidden="true"></i>                Sections              </a>
+                                 
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/subjects">                <i class="fa fa-laptop" aria-hidden="true"></i>                Subjects              </a>
+                                 
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/syllabus">                <i class="fa fa-graduation-cap" aria-hidden="true"></i>                Syllabus              </a>
+                                 
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link " routerLink="/examtitles">                <i class="fa fa-question" aria-hidden="true"></i>examtitles              </a>
+                            
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/resultchart">                <i class="fa fa-cubes" aria-hidden="true"></i>Results              </a>
+                               
+                                 </li>
+                                 <li class="nav-item">
+                                  <a class="nav-link" routerLink="/adminfiles">                <i class="fa fa-archive" aria-hidden="true"></i>File Box              </a>
+                                 </li>
+                                 <li class="nav-item">
+
+
+                                  <a href="#" class="nav-link" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>
+
+                                  SignOut  </a>
+                                 </li>
+
+                                
+                               
+                            </ul>
+                            </div>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="navbarNav"  *ngIf="showuserBoard"  >
+                         
+                          
+                          
+                            <div class="collapse navbar-collapse"
+                                 [ngClass]="{ 'show': navbarOpen }">
+                              <ul class="navbar-nav mr-auto flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link  " routerLink="/user"> 
+                                    <i class="fa fa-desktop" aria-hidden="true"></i> My Account
+                                  </a>
+                                </li>
+                          
+                          
+                               <li class="nav-item">
+                                  <a class="nav-link " routerLink="/smessage">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>Messages
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link " routerLink="/assignment">
+                                    <i class="fa fa-tasks" aria-hidden="true"></i>Assignments
+                                  </a>
+                                </li>
+                        
+                                <li class="nav-item">
+                                  <a class="nav-link " routerLink="/scalendar">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>Calendar
+                                  </a>
+                                </li>
+                        
+                                <li class="nav-item">
+                                  <a class="nav-link " routerLink="/myexams">
+                                    <i class="fa fa-question" aria-hidden="true"></i>Exams
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link  " routerLink="/mysyllabus">
+                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>Syllabus
+                                  </a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link " routerLink="/filebox">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>File Box
+                                  </a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                  <a class="nav-link " routerLink="/fees">
+                                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                        
+                                     Fees
+                                  </a>
+                                </li>
+
+                                <li class="nav-item">
+
+
+                                  <a href="#" class="nav-link" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>
+
+                                  SignOut  </a>
+                                 </li>
+                              </ul>
+                            </div>
+                       
+                            <!-- <ul class="navbar-nav flex-column">
+                                <li class="nav-divider"  >
+                                    Menu
+                                </li>
+                             
+                              
+
+                                 <li class="nav-item">
+                                    <a class="nav-link  " routerLink="/user"> 
+                                      <i class="fa fa-desktop" aria-hidden="true"></i> My Account
+                                    </a>
+                                  </li>
+                            
+                            
+                                 <li class="nav-item">
+                                    <a class="nav-link " routerLink="/smessage">
+                                      <i class="fa fa-envelope" aria-hidden="true"></i>Messages
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/assignment">
+                                      <i class="fa fa-tasks" aria-hidden="true"></i>Assignments
+                                    </a>
+                                  </li>
+                          
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/scalendar">
+                                      <i class="fa fa-calendar" aria-hidden="true"></i>Calendar
+                                    </a>
+                                  </li>
+                          
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/myexams">
+                                      <i class="fa fa-question" aria-hidden="true"></i>Exams
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link  " routerLink="/mysyllabus">
+                                      <i class="fa fa-graduation-cap" aria-hidden="true"></i>Syllabus
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/filebox">
+                                      <i class="fa fa-folder" aria-hidden="true"></i>File Box
+                                    </a>
+                                  </li>
+                                  
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/fees">
+                                      <i class="fa fa-credit-card" aria-hidden="true"></i>
+                          
+                                       Fees
+                                    </a>
+                                  </li>
+
+                                  <li class="nav-item">
+
+
+                                    <a href="#" class="nav-link" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>
+  
+                                    SignOut  </a>
+                                   </li>
+
+                               
+                            </ul> -->
+                        </div>
+                        <div class="collapse navbar-collapse"  id="navbarNav" *ngIf="showModeratorBoard"  >
+                          
+                            
+                          <div class="collapse navbar-collapse"
+                          [ngClass]="{ 'show': navbarOpen }">
+                       <ul class="navbar-nav mr-auto flex-column">
+                              
+                             
+                              
+                              
+                                <li class="nav-item">
+                                    <a class="nav-link  active" routerLink="/mod"> 
+                                      <i class="fa fa-desktop" aria-hidden="true"></i>
+                                     My Account
+                                    </a>
+                                  </li>
+                             
+                                  <li class="nav-item">
+                                    <a class="nav-link  " routerLink="/classroom">
+                                      <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                      Classroom
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link  " routerLink="/calendar">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            Calendar
+                                      </a>
+                                    </li>
+                        
+                            
+                                 <li class="nav-item">
+                                    <a class="nav-link  " routerLink="/messages">
+                                      <i class="fa fa-envelope" aria-hidden="true"></i>Messages
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/assignments">
+                                      <i class="fa fa-tasks" aria-hidden="true"></i>
+                                      Assignments
+                                    </a>
+                                  </li>
+                        
+                                  <li class="nav-item">
+                                    <a class="nav-link " routerLink="/exams">
+                                      <i class="fa fa-question" aria-hidden="true"></i>
+                      
+                                      Exams
+                                    </a>
+                                  </li>
+                        
+                                  <li class="nav-item">
+                                    <a class="nav-link  " routerLink="/tfilebox">
+                                      <i class="fa fa-archive" aria-hidden="true"></i>
+                      
+                                      Filebox
+                                    </a>
+                                  </li>
+
+                          
+
+                                  <li class="nav-item">
+
+
+                                    <a href="#" class="nav-link" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>
+  
+                                    SignOut  </a>
+                                   </li>
+
+                               
+                            </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="collapse navbar-collapse" id="navbarNav" *ngIf="showInstBoard"  >
+                          
+                                    
+                          <div class="collapse navbar-collapse"
+                          [ngClass]="{ 'show': navbarOpen }">
+                       <ul class="navbar-nav mr-auto flex-column">
+                         
+                        <a class="nav-link   " routerLink="/Institute"> 
+                          <i class="fa fa-desktop" aria-hidden="true"></i>
+                        Dashboard
+                        </a>
+                        <a class="nav-link   " routerLink="/Schools"> 
+                          <i class="fa fa-university" aria-hidden="true"></i>
+                         My Schools
+                        </a>
+                                  <li class="nav-item">
+
+
+                                    <a href="#" class="nav-link" (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>
+  
+                                    SignOut  </a>
+                                   </li>
+
+                               
+                            </ul>
+
+                            </div>
+                        </div>
+
+ 
+            
+                            
+                          
+        
+                       
+                           
+                
+                     
+                 
+
+                    </nav>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end left sidebar -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- wrapper  -->
+            <!-- ============================================================== -->
+            <router-outlet></router-outlet>
+
+            <!-- ============================================================== -->
+            <!-- end wrapper  -->
+            <!-- ============================================================== -->
+        </div>
+
+
+
+      
+      
+     
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+          
+       
+     
+  
+  
+     
+     
+     
+                
+        
+  
+
+

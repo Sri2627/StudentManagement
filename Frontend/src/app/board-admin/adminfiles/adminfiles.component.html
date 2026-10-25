@@ -1,0 +1,512 @@
+ 
+ 
+<div class="container-fluid" >
+  <div class="row">
+ 
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+     
+   
+
+      
+      <div class="table-responsive">
+        
+              <div class="inner-adjust">
+                             
+        <div class="d-flex justify-content-between">
+          <div>
+            <h2>My File Box </h2>
+          </div>
+          <div>
+      
+            
+            <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#messages">
+              <i class="fas fa-plus"></i>Upload File
+            </button>&nbsp;
+         
+            
+            <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fas fa-plus"></i>Create Folder
+            </button>&nbsp;
+      
+           </div>
+      </div>
+           
+      <hr/><!-- table-->
+
+
+      <div class="d-flex justify-content-between"  style="margin-bottom:10px;">
+        <div>
+           <div class="d-flex justify-content-between"   > 
+            <button  class="btn btn-primary "    (click)="reloadPage()">
+              Home
+              </button>&nbsp;
+
+            <div> <p style="color: rgb(255, 0, 0);">Total Records: {{totalRecords}}  &nbsp;<br></p>  </div>
+            
+         
+
+
+             <div>             
+           
+             </div>
+     
+             <div>    <label style="margin-left: 10px;">Search: &nbsp;</label></div>
+             <div>  <input style="width: 300px;"type="text" name= "search" [(ngModel)]="searchterm"></div>  
+         </div>
+          </div>
+        
+        <div>
+         <div>
+     
+           <div>  
+           </div>        
+                 <div class="d-flex justify-content-between">
+                   <div><label for="cars">Records per page : &nbsp;</label></div>
+                   <div>  <select (change)="onTableSizeChange($event)"> 
+                     <option *ngFor="let size of tableSizes"> {{size}}</option>
+                   </select></div>  
+              
+             </div>
+           </div>  
+          </div>
+       </div>
+      
+      
+      
+     
+      
+     <div class="data">
+     
+          
+<div class="content" >
+
+
+  <div class="d-flex align-content-stretch flex-wrap">
+    <div class="card" style="width: 19rem; margin: 12px;" 
+    *ngFor="let stu of fileData  | orderBy: order |filter:searchterm | paginate:{itemsPerPage: tableSize,currentPage: page , totalItems:count}  let i = index">
+           
+    <div class="card-body"  >
+ 
+      <!-- <p class="card-text"> {{stu._id|titlecase}}</p>
+      <p class="card-text"> {{stu.username|titlecase}}</p> -->
+      
+
+      <div class="row">
+        <div class="col-sm-4" > <div *ngIf="stu.is_folder" >  <img src="../../assets/folder.png" width="40px" (click)="getmychildren(stu.id)" /> </div> <a  (click)="seturl(stu.fileurl,stu.id)"  data-bs-toggle="modal"  data-bs-target="#crop" target="_blank"><img src={{stu.fileurl}} width="100px"/></a></div>
+    
+
+        
+      </div>
+      Size : {{stu.size/1000000}}  MB
+      </div>
+
+      
+    
+    <div class="card-footer">
+     
+     
+
+    <button (click)="setfile(stu.id)" type ="button" class="btn btn-primary"
+    data-bs-toggle="modal" data-bs-target="#viewModal" style="margin-left: 5px;">Move</button>&nbsp;
+    
+    <button type ="button" class="btn btn-outline-danger" (click)="deletefile(stu.id)"
+    ><i class="fas fa-trash"></i></button> 
+    
+    <button  type ="button" class="btn btn-primary"(click)="seturl(stu.fileurl,stu.id)"
+    data-bs-toggle="modal" data-bs-target="#crop" style="margin-left: 5px;"><i class="fa fa-crop" aria-hidden="true"></i>
+   </button>&nbsp;
+
+    <!-- <button type ="button" class="btn btn-outline-success"   (click)="getdetails(stu.foldername)"
+    ><i class="fas fa-plus"></i></button>&nbsp; -->
+    
+
+    </div>
+          
+    </div>
+   
+  </div>
+   
+          
+           
+         <div>
+     
+ 
+
+  
+        </div>  
+           
+     
+         
+     </div>
+     <pagination-controls
+     previousLabel=" Prev"
+     nextLabel="Next"
+
+     (pageChange)="onTableDataChange($event)"></pagination-controls>
+          <!-- table-->
+             
+                 
+      
+       
+         <!-- Modal2-->
+        </div>
+     
+
+         
+
+      
+      <ng-template #loggedOut>
+        Please login.
+      </ng-template>
+              </div>
+          
+      </div>
+    </main>
+  
+
+</div>
+</div>
+
+ 
+       
+    
+ 
+
+            <!-- View Details-->
+
+            
+ 
+<!--Form Modal-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+  
+  
+         
+        <div class="submit-form">
+          <div *ngIf="!submitted">
+
+              <!-- <div class="form-group">
+                <label for="customerid">id</label>
+                <input   
+                  type="text"
+                  class="form-control"
+                  id="customerid"
+                  required
+                  [(ngModel)]="tutorial.customerid"
+                  name="customerid"
+                
+                  value = "{{ currentUser.id }}"
+                />
+              </div>   -->
+
+
+            <div class="form-group">
+              <label for="foldername">Folder Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="foldername"
+                required
+                [(ngModel)]="file.foldername"
+                name="foldername"
+              />
+            </div>
+       
+        
+
+
+    
+            <button (click)="createFolder()" class="btn btn-success">Submit</button>
+            <div *ngIf="submitted">
+              <h4>Message sent successfully!</h4>
+             
+            </div>
+          </div>
+      
+          <div *ngIf="submitted">
+            <h4>Message sent successfully!</h4>
+           
+          </div>
+        </div>
+ 
+
+
+ 
+      </div>
+      <div class="modal-footer">
+ 
+
+          
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       
+      
+    </div>
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Move To Folder</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+       
+
+        <div class="card mt-3">
+       
+          <ul
+            class="list-group list-group-flush"
+            *ngFor="let stu of fileData"
+          >
+
+          <div *ngIf="stu.is_folder" > 
+            <li class="list-group-item">
+              <img src="../../assets/folder.png" width="40px"   (click)="assignparent(stu.id)"/>
+              {{ stu.foldername }}
+            </li>
+            </div>
+          </ul>
+        </div>
+
+
+ 
+      
+      </div>
+      
+      
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="messages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Messages</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-8">
+            <label class="btn btn-default p-0">
+              <input type="file" (change)="selectFile($event)" />
+            </label>
+          </div>
+        
+          <div class="col-4">
+            <button
+              class="btn btn-success btn-sm"
+              [disabled]="!selectedFiles"
+              (click)="upload()"
+            >
+              Upload
+            </button>
+          </div>
+        </div>
+
+           
+        <div *ngIf="currentFile" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }"
+          >
+            {{ progress }}%
+          </div>
+        </div>
+        
+        <div *ngIf="message" class="alert alert-secondary" role="alert">
+          {{ message }}
+        </div>
+        {{resfilename}}
+        <!-- <div class="card mt-3">
+          <div class="card-header">List of Files</div>
+          <ul
+            class="list-group list-group-flush"
+            *ngFor="let file of fileInfos | async"
+          >
+            <li class="list-group-item">
+              <a href="{{ file.url }}">{{ file.name }}</a>
+            </li>
+          </ul>
+        </div>
+
+
+
+      </div> -->
+
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CROP -->
+<div class="modal fade" id="crop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CROP</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-5 text-center">
+         
+          <!-- <input type="file" (change)="fileChangeEvent($event)" />
+          <br />
+          <br />
+           <input [(ngModel)]="fileurl" placeholder="URL to load image" type="text" />
+          <br />
+          <br />
+          <button (click)="rotateLeft()">Rotate left</button>
+          <button (click)="rotateRight()">Rotate right</button>
+          <button (click)="flipHorizontal()">Flip horizontal</button>
+          <button (click)="flipVertical()">Flip vertical</button>
+          <br />
+          <br />
+          <button (click)="toggleContainWithinAspectRatio()">{{containWithinAspectRatio?'Fill Aspect Ratio':'Contain Within Aspect Ratio'}}</button>
+          <button (click)="toggleAspectRatio()">Aspect ratio: {{aspectRatio === 4/3 ? '4/3' : '16/5'}}</button>
+          <button (click)="resetImage()">Reset image</button>
+          <br />
+          <br />
+          <input [(ngModel)]="rotation" placeholder="Rotation" type="number" (ngModelChange)="updateRotation()" /> <button (click)="zoomOut()">Zoom -</button> <button (click)="zoomIn()">Zoom +</button>
+          <br />
+          <br/>
+          <button (click)="moveLeft()">move left</button>
+          <button (click)="moveRight()">move right</button>
+          
+          <button (click)="moveTop()">move top</button>
+          <button (click)="moveBottom()">move bottom</button>
+          <br/>
+          <br/>
+          <button (click)="allowMoveImage = !allowMoveImage;">{{allowMoveImage ? 'Disable' : 'Enable' }} image panning</button>
+          <br/> -->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+
+                <div class="cropper-wrapper">
+                  <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [imageURL]="fileurl"
+                     [resizeToWidth]="300"
+                     [aspectRatio]="aspectRatio"
+                     [maintainAspectRatio]="true"
+                     [containWithinAspectRatio]="containWithinAspectRatio"
+                 
+                    [onlyScaleDown]="true"
+                    [roundCropper]="false"
+                    [canvasRotation]="canvasRotation"
+                    [(transform)]="transform"
+                    [alignImage]="'center'"
+                    [style.display]="showCropper ? null : 'none'"
+                    [allowMoveImage]="allowMoveImage"
+                    backgroundColor="red"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()"
+                    (cropperReady)="cropperReady($event)"
+                    (loadImageFailed)="loadImageFailed()"
+                  ></image-cropper>
+                  
+                <div  style="margin-top: 10px;">
+
+
+                  <button type="button" class="btn btn-primary"  style="margin-right: 2px;"  (click)="rotateLeft()" title="Rotate Left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>                     </button> 
+                  <button type="button" class="btn btn-primary"  style="margin-right: 2px;"  (click)="cropupdateimage()" > <i class="fa fa-crop" aria-hidden="true"></i>Crop </button>  
+                  <button type="button" class="btn btn-primary" style="margin-right: 2px;"  (click)="toggleAspectRatio()">  {{aspectRatio === 4/3 ? 'Portrait' : 'Landscape'}}</button>  
+
+                  <button type="button" class="btn btn-primary"  style="margin-right: 2px;" (click)="rotateRight()"  title="Rotate Right"
+                  >  <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                 </button>&nbsp;
+
+                 <br />
+                 <br />
+                 <button type="button" class="btn btn-primary" (click)="zoomOut()">Zoom -</button> &nbsp;
+                 <button type="button" class="btn btn-primary" (click)="zoomIn()">Zoom +</button>&nbsp;
+                 <br />
+
+                </div>
+                  <div *ngIf="loading" class="loader">Loading...</div>
+                </div>
+              </div>
+              <div class="col"> 
+               
+                <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" />
+           
+        
+<!--                    
+                <div *ngIf="currentFile" class="progress my-3">
+                  <div
+                    class="progress-bar progress-bar-info"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ progress }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: progress + '%' }"
+                  >
+                    {{ progress }}%
+                  </div>
+                </div>
+                
+                <div *ngIf="message" class="alert alert-secondary" role="alert">
+                  {{ message }}
+                </div>
+                {{resfilename}} -->
+
+              </div>
+              
+            </div>
+          </div>
+          
+        
+        
+ 
+
+
+        </div>
+        
+ 
+      
+      </div>
+      
+      
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="reloadPage()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
