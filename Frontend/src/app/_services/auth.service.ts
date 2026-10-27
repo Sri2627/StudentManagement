@@ -44,7 +44,6 @@ export class AuthService {
       username,
       email,
       password,
-      roles,
       fullname,
       mobile,
       address,
@@ -54,6 +53,10 @@ export class AuthService {
       photourl,
       admissionno,
     }, httpOptions);
+  }
+
+  provision(data: any): Observable<any> {
+    return this.http.post(AUTH_API + 'provision', data, httpOptions);
   }
 
   tregister(
@@ -73,7 +76,7 @@ export class AuthService {
     admissionno: String,
 
     ): Observable<any> {
-    return this.http.post(AUTH_API + 'signup', {
+    return this.http.post(AUTH_API + 'provision', {
       username,
       email,
       password,
@@ -106,7 +109,7 @@ export class AuthService {
     code: String,
 
     ): Observable<any> {
-    return this.http.post(AUTH_API + 'signup', {
+    return this.http.post(AUTH_API + 'provision', {
       username,
       email,
       password,

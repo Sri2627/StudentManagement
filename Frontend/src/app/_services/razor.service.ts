@@ -21,13 +21,11 @@ export class RazorService{
   }
 
   create(data: any): Observable<any> {
-
-   
     return this.http.post(baseUrl, data);
   }
 
-  
-
-  
+  verify(data: any): Observable<any> {
+    return this.http.post(`${baseUrl}/verify`, data);
+  }
 
 } 

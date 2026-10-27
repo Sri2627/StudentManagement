@@ -33,7 +33,7 @@ module.exports = function(app) {
   app.get("/api/teachers/:id",  controller.findteacher );
 
   app.get("/api/teachers",  controller.moderatorBoard);
-  app.get("/api/admin", [authJwt.verifyToken, authJwt.issuperadmin], controller.adminBoard);
+  app.get("/api/admin", [authJwt.isInstitution], controller.adminBoard);
   app.delete("/api/teachers/:id", controller.delete);
 
   app.get(

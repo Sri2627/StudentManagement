@@ -3,7 +3,6 @@ import { NgAnalyzeModulesHost, ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../_services/auth.service';
 import { Students } from '../../models/student.model';
 import { StudentService } from '../../_services/student.service';
 import { TokenStorageService } from '../../_services/token-storage.service';
@@ -96,7 +95,6 @@ export class ClassroomComponent implements OnInit {
     private tutorialService: TutorialService, 
     private tokenStorage: TokenStorageService,
     private formbuilder: FormBuilder, 
-    private authService:AuthService,  
     public paginate: PaginationService) { }
 
   ngOnInit(): void {
@@ -167,21 +165,8 @@ updateSection (sec :string){
   }
 
   onSubmit(): void {
-                     const { username, email, password, roles, fullname, mobile, address, standard, section, profile, photourl,admissionno} = this.form;
-   
-    this.authService.register(username, email, password, roles, fullname, mobile, address, standard, section, profile,photourl,admissionno).subscribe({
-      next: data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-      }
-    });
-  
+    this.errorMessage = 'Student account creation is restricted to administrators. Please contact an administrator.';
+    this.isSignUpFailed = true;
   }
 
   retrieveStudents(): void {

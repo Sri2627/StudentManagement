@@ -1,317 +1,133 @@
- 
-const { request } = require('express');
-let users = require('../models/user.model')
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const db = require("../models");
+const users = db.user;
+const Role = db.role;
+const bcrypt = require("bcryptjs");
+
+const editableFields = [
+  "email",
+  "fullname",
+  "admissionno",
+  "mobile",
+  "address",
+  "subject",
+  "section",
+  "standard",
+  "mysections",
+  "profile",
+  "photourl",
+  "signature",
+  "code"
+];
 
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("Authenticated content.");
 };
 
-  
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  users.findById(id)
-    .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Not found Tutorial with id " + id });
-      else res.send(data);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving Tutorial with id=" + id });
-    });
-};
-
-
-exports.userBoard = (req, res) => {
- // res.status(200).send("User Content.");
-
- users.find({roles: "62c2c9e84c10654b1c16a54a" }, function (err, data) {
-  if (err){
-      console.log(err)
-  }
-  else{
-    res.json(data)
-  }
-});
-
-
-
-};
-
-exports.adminBoard = (req, res) => {
-  // res.status(200).send("Admin Content.");
- 
-  users.find({roles: "62c2c9e84c10654b1c16a54c" }, function (err, data) {
-   if (err){
-       console.log(err)
-   }
-   else{
-     res.json(data)
-   }
- });
- 
- };
-
-exports.moderatorBoard = (req, res) => {
-  // res.status(200).send("Moderator Content.");
- 
-  users.find({roles: "62c2c9e84c10654b1c16a54b" }, function (err, data) {
-   if (err){
-       console.log(err)
-   }
-   else{
-     res.json(data)
-   }
- });
-
-
-};
-exports.getClassroom = (req, res) => {
-  // res.status(200).send("User Content.");
-  const sec = req.params.section;
-    
-
-
-  // users.find({roles: "62c2c9e84c10654b1c16a54a" ,  "standard": { $eq: sec }},function (err, data) {
-  //   if (err){
-  //       console.log(err)
-  //   }
-  //   else{
-  //     res.json(data)
-  //     console.log(sec)
-
-      
-  //   }
-  // });
-
-
-
-  const section = req.query.section ;
-  
-
-  users.find( { roles: "62c2c9e84c10654b1c16a54a" , section: { $eq: section } } )
-    .then(data => {
-      res.send(data);
- 
-      
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-
-
-
-
-
-
-}
-
-
-exports.findteacher = (req, res) => {
-  const id = req.params.id;
-
-  users.findById(id)
-    .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Not found Tutorial with id " + id });
-      else res.send(data);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving Tutorial with id=" + id });
-    });
-};
-
-
-
-
-
-exports.getStand = (req, res) => {
-  // res.status(200).send("User Content.");
-  const sec = req.params.section;
-    
- 
-
-  const section = req.query.section ;
-  
-
-  users.find( { roles: "62c2c9e84c10654b1c16a54a" , standard: { $eq: section } } )
-    .then(data => {
-      res.send(data);
- 
-      
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-
-
-
-
-
-
-}
-
-exports.getadminusers = (req, res) => {
- 
-  const code = req.query.code ;
-  
-  users.find( { roles: "62c2c9e84c10654b1c16a54c" , code: { $eq: code } } )
-    .then(data => {
-      res.send(data);
- 
-      
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
- 
-
-}
-
-
-
-
-
-
-
-exports.getuserdetails = (req, res) => {
-  // res.status(200).send("Moderator Content.");
-  const id = req.params.id;
-    
-           users.findById(id)
-           .then(data => {
-             if (!data)
-               res.status(404).send({ message: "Not found Tutorial with id " + id });
-             else res.send(data);
-           })
-           .catch(err => {
-             res
-               .status(500)
-               .send({ message: "Error retrieving Tutorial with id=" + id });
-           });
- };
- 
- 
-
-
-
-// exports.deleteStudent = (req, res) => {
-//   //res.status(200).send("Moderator Content.");
-
- 
-//    users.findByIdAndDelete(req.userId, function (err, data) {
-
-//     id: req.body.id;
-    
-//     if (err){
-//         console.log(err)
-//     }
-//     else{
-//         console.log("Deleted : ", data);
-//     }
-// });
-
-
-
-// };
-
- 
-
-exports.updatepassword = (req, res) => {
- 
- 
-  const password = bcrypt.hashSync(req.body.password, 8);
-  console.log(password);
-  const id = req.params.id;
-    req.params.password = password;
- 
-    const body = {
-      id: req.body.id,
-       
-      password: bcrypt.hashSync(req.body.password, 8)
-    };
-
-
-  users.findByIdAndUpdate(id, body, { useFindAndModify: false })
-     .then(data => {
-      console.log(data);
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update user with id=${id}. Maybe user was not found!`
-        });
-      } else res.send({ message: "user was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating user with id=" + id
-      });
-    });
-
-}
-
-exports.update = (req, res) => {
-
-  console.log("update started");
-
-  const id = req.params.id;
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
-  }
- 
-
-  users.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update user with id=${id}. Maybe user was not found!`
-        });
-      } else res.send({ message: "user was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating user with id=" + id
-      });
-    });
-
-}
-
- 
-exports.delete = (req, res) => {
-  const id = req.params.id;
-console.log("delete started");
-  users.findByIdAndRemove(id, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
-        });
-      } else {
-        res.send({
-          message: "Tutorial was deleted successfully!"
-        });
+exports.findOne = (req, res) => findById(req, res);
+exports.findteacher = (req, res) => findById(req, res);
+exports.getuserdetails = (req, res) => findById(req, res);
+
+function findById(req, res) {
+  users.findById(req.params.id)
+    .select("-password")
+    .exec((err, user) => {
+      if (err) {
+        return res.status(500).send({ message: "Unable to retrieve user." });
       }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id
-      });
+      if (!user) {
+        return res.status(404).send({ message: "User not found." });
+      }
+      return res.send(user);
     });
+}
+
+async function findUsersByRole(roleName, filter, res) {
+  try {
+    const role = await Role.findOne({ name: roleName });
+    if (!role) {
+      return res.status(404).send({ message: "Role not found." });
+    }
+    const foundUsers = await users
+      .find({ roles: role._id, ...filter })
+      .select("-password")
+      .exec();
+    return res.send(foundUsers);
+  } catch (err) {
+    return res.status(500).send({ message: "Unable to retrieve users." });
+  }
+}
+
+exports.userBoard = (req, res) => findUsersByRole("user", {}, res);
+exports.adminBoard = (req, res) => findUsersByRole("admin", {}, res);
+exports.moderatorBoard = (req, res) => findUsersByRole("moderator", {}, res);
+
+exports.getClassroom = (req, res) =>
+  findUsersByRole("user", { section: req.query.section }, res);
+
+exports.getStand = (req, res) =>
+  findUsersByRole("user", { standard: req.query.section }, res);
+
+exports.getadminusers = (req, res) =>
+  findUsersByRole("admin", { code: req.query.code }, res);
+
+exports.updatepassword = async (req, res) => {
+  const { password } = req.body;
+  if (typeof password !== "string" || password.length < 8 || password.length > 128) {
+    return res.status(400).send({
+      message: "Password must be between 8 and 128 characters."
+    });
+  }
+
+  try {
+    const updatedUser = await users.findByIdAndUpdate(
+      req.params.id,
+      { $set: { password: bcrypt.hashSync(password, 10) } },
+      { new: true, runValidators: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    return res.send({ message: "Password updated successfully." });
+  } catch (err) {
+    return res.status(500).send({ message: "Unable to update password." });
+  }
 };
 
+exports.update = async (req, res) => {
+  const updates = editableFields.reduce((fields, name) => {
+    if (req.body[name] !== undefined) {
+      fields[name] = req.body[name];
+    }
+    return fields;
+  }, {});
+
+  if (Object.keys(updates).length === 0) {
+    return res.status(400).send({ message: "No editable user fields provided." });
+  }
+
+  try {
+    const updatedUser = await users.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    ).select("-password");
+    if (!updatedUser) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    return res.send({ message: "User updated successfully." });
+  } catch (err) {
+    return res.status(500).send({ message: "Unable to update user." });
+  }
+};
+
+exports.delete = async (req, res) => {
+  try {
+    const deletedUser = await users.findByIdAndDelete(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    return res.send({ message: "User deleted successfully." });
+  } catch (err) {
+    return res.status(500).send({ message: "Unable to delete user." });
+  }
+};

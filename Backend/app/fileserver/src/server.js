@@ -7,11 +7,13 @@ const express = require("express");
 const app = express();
 const initRoutes = require("./routes");
 
-var corsOptions = {
-  origin: "http://localhost:3200"
-};
+const allowedOrigins = (process.env.CORS_ORIGINS ||
+  "http://localhost:4200,http://localhost:3200")
+  .split(",")
+  .map(origin => origin.trim())
+  .filter(Boolean);
 
-app.use(cors(corsOptions));
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.urlencoded({ extended: true }));
 initRoutes(app);
 

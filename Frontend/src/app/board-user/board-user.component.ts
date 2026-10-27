@@ -89,15 +89,17 @@ export class BoardUserComponent implements OnInit {
  
   calendarOptions: CalendarOptions = {
     headerToolbar: {
- 
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      left: 'prev,next',
+      center: 'title',
+      right: 'today'
     },
     initialView: 'dayGridMonth',
     weekends: true,
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true
+    editable: false,
+    selectable: false,
+    dayMaxEvents: true,
+    height: 'auto',
+    events: []
     
   };
 
@@ -346,10 +348,16 @@ selectFile(event: any): void {
           next: (data) => {
   
             this.currenteventdata = data;
-           
-        
-            console.log(data);
-          },
+              this.calendarOptions = {
+                ...this.calendarOptions,
+                events: data.map((event) => ({
+                  id: event.id,
+                  title: event.title || 'School event',
+                  start: event.date,
+                  extendedProps: { description: event.description }
+                }))
+              };
+            },
           error: (e) => console.error(e)
         });
     }

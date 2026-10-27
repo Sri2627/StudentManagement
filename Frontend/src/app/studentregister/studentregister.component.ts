@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
 import { FileUploadService } from '../_services/fileUploadService';
-import { StudentService } from '../_services/student.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
@@ -20,7 +19,6 @@ export class StudentregisterComponent implements OnInit {
   errorMessage = '';
   studentData: any;
   totalRecords: any;
-  lastadmissionno!: number;
   
   selectedFiles?: FileList;
   currentFile: any;
@@ -36,12 +34,10 @@ export class StudentregisterComponent implements OnInit {
   currentUser: any;
   mysections: any;
   mysubjects:any
-  newpassword!: any;
   form: any = {
     username: null,
     email: null,
-    password:  this.newpassword,
-    roles: ["user"],
+    password: null,
     fullname: null,
     mobile: null,
     address:  null,
@@ -53,19 +49,18 @@ export class StudentregisterComponent implements OnInit {
   };
   currentid: any;
 
-  constructor(private studentservice: StudentService, 
+  constructor(
     private uploadService :FileUploadService,
     public router: Router, private tokenStorage: TokenStorageService,private formbuilder: FormBuilder, private authService:AuthService,  ) { }
 
   ngOnInit(): void {
-    this.retrieveStudents();
   }
  
 
   onSubmit(): void {
-                     const { username, email, password= this.newpassword, roles, fullname, mobile, address, standard, section, profile, photourl=this.resfileurl,admissionno = this.lastadmissionno } = this.form;
+    const { username, email, password, fullname, mobile, address, standard, section, profile, photourl=this.resfileurl, admissionno } = this.form;
    
-    this.authService.register(username, email, password, roles, fullname, mobile, address, standard, section, profile,photourl,admissionno).subscribe({
+    this.authService.register(username, email, password, undefined, fullname, mobile, address, standard, section, profile,photourl,admissionno).subscribe({
       next: data => {
 
         console.log(photourl);
@@ -83,39 +78,8 @@ export class StudentregisterComponent implements OnInit {
   
   }
 
-  retrieveStudents(): void {
-    
-    this.studentservice.getAll()
-      .subscribe({
-        next: (data) => {
-
-          this.studentData = data;
-          this.totalRecords=this.studentData.length;
-          this.studentData = data.sort((one:any, two :any) => (one.admissionno > two.admissionno ? 1 : -1));
-          
-          this.lastadmissionno =  Number(this.studentData[this.totalRecords-1].admissionno);
-          this.lastadmissionno = this.lastadmissionno+1;
-         this.newpassword =  String(this.lastadmissionno);
-        },
-        error: (e) => console.error(e)
-      });
-  }
- 
- 
- 
- 
   reloadPage(): void {
     window.location.reload();
-  }
-  removeAllstudents():void{
-    this.studentservice.deleteAll()
-    .subscribe({
-      next: (res) => {
-        console.log(res);
-        
-      },
-      error: (e) => console.error(e)
-    });
   }
   
 

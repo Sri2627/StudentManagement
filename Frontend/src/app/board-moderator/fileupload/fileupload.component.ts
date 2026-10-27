@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { FileUploadService } from 'src/app/_services/fileUploadService';
  
 import { VERSION ,ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/_services/auth.service';
-import { StudentService } from 'src/app/_services/student.service';
 
 
 export class CsvData {
@@ -66,10 +64,7 @@ export class FileuploadComponent implements OnInit {
 
 
 
-  constructor(private uploadService: FileUploadService,
-    private studentservice: StudentService, private authService: AuthService
-    
-    ) { }
+  constructor(private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();
@@ -249,69 +244,9 @@ debugger
 
  
     Uploadstudents(csvRecordsArray: any, headerLength: any) {
-       
-      let csvArr = [];
-      
-      for (let i = 1; i < csvRecordsArray.length; i++) {
-        let curruntRecord = (<string>csvRecordsArray[i]).split(',');
-        if (curruntRecord.length == headerLength) {
-          let csvRecord: CsvData = new CsvData();
-          csvRecord.username = curruntRecord[1].trim();
-          csvRecord.password = curruntRecord[7].trim();
-          csvRecord.roles =   ['user'];
-          csvRecord.admissionno = curruntRecord[7].trim();
-          csvRecord.fullname = curruntRecord[1].trim();
-          csvRecord.mobile = curruntRecord[2].trim();
-          csvRecord.email = curruntRecord[3].trim();
-          csvRecord.address = curruntRecord[4].trim();
-          csvRecord.standard = curruntRecord[5].trim();
-          csvRecord.section = curruntRecord[6].trim();
-          csvRecord.profile = curruntRecord[1].trim();
-          csvRecord.photourl =   this.resfilename[i].filename;
-          console.log(this.resfilename[i].filename);
-
-           csvArr.push(csvRecord);
-           this.authService.register(
-            csvRecord.username,
-            csvRecord.email,
-            csvRecord.password,
-            csvRecord.roles, 
-            csvRecord.fullname,
-            csvRecord.mobile,
-            csvRecord.address,
-            csvRecord.standard,
-            csvRecord.section,
-            csvRecord.profile,
-            csvRecord.photourl,
-            csvRecord.admissionno,
-                    )
-           .subscribe({
-             next: (res) => {
-               console.log(res);
-                
-               //alert(res.message);
-             },
-             error: (e) => {
-              console.error(e);
-
-              this.errorMessage = e.error.message;;
-
-              console.log(this.errorMessage);
-
-             }
-           });
- 
-         console.log(csvRecord);
-              
-        }
-      }
-     
-      
-  alert("Upload completed")
-      return csvArr;
-  
-
-     
+      this.errorMessage = 'Student account imports are restricted to administrators. Please use the admin account-import workflow.';
+      this.isSignUpFailed = true;
+      return [];
     }
 
 

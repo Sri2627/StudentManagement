@@ -15,7 +15,8 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
     const token = this.token.getToken();
-    if (token != null) {
+    const isPublicAuthRequest = /\/api\/auth\/(signup|signin)$/.test(req.url);
+    if (token != null && !isPublicAuthRequest) {
       // for Spring Boot back-end
       // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
 

@@ -8,6 +8,7 @@ import { AccountService } from '../../_services/account.service';
 import { AuthService } from '../../_services/auth.service';
 import { StudentService } from '../../_services/student.service';
 import { TokenStorageService } from '../../_services/token-storage.service';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -49,11 +50,6 @@ export class AccountsComponent implements OnInit {
  
   };
   submitted = false;
-  studentData:any;
-  sids:any;
-  snames:any;
-  mrecords:any;
-  admisssionid: any;
   constructor(
     private studentservice: StudentService, 
     public router: Router, 
@@ -73,73 +69,52 @@ export class AccountsComponent implements OnInit {
 
 
         
-  getmystudents(standard: any): void {
-     this.studentservice.findBystandard(standard)
-      .subscribe({
-        next: (data) => {
-       
-          //this.studentData = data.sort((one:any, two :any) => (one.admissionno > two.admissionno ? 1 : -1));
-        this.studentData = data;
-        this.mrecords = this.studentData.length;
-      
-        const student = this.mrecords;
-        if(this.mrecords == 0){
-          alert("this class does not have any students");
+  sendinvoice(): void{
+    this.studentservice.findBystandard(this.invoice.standard).subscribe({
+      next: students => {
+        if (students.length === 0) {
+          this.errorMessage = "There are no students in this standard.";
+          return;
         }
 
-          this.sids = data.map( (item) => item._id);
-          this.admisssionid = data.map( (item) => item.admissionno);
-          this.snames = data.map( (item) => item.fullname);
-        },
-        error: (e) => console.error(e)
-      });
-  }
+        const total = Number(this.invoice.tutionfee) +
+          Number(this.invoice.transportfee) +
+          Number(this.invoice.termfee);
+        if (!Number.isFinite(total) || total <= 0) {
+          this.errorMessage = "Enter a valid positive invoice total.";
+          return;
+        }
 
-  sendinvoice(): void{
- 
+        const requests = students.map(student => this.accountService.create({
+          name: student.fullname,
+          studentid: student._id,
+          admissionno: student.admissionno,
+          standard: this.invoice.standard,
+          feeformat: this.invoice.feeformat,
+          lastdate: this.invoice.lastdate,
+          tutionfee: this.invoice.tutionfee,
+          transportfee: this.invoice.transportfee,
+          termfee: this.invoice.termfee,
+          total
+        }));
 
-    this.getmystudents( this.invoice.standard);
-    const length = this.mrecords;
-   
-    for(let j=0;j<length;j++){   
-    
-
-      const data = {
-       
-    name:this.snames[j],
-    studentid: this.sids[j],
-    admissionno: this.admisssionid[j],
-    standard:this.invoice.standard,
-    feeformat:this.invoice.feeformat,
-    lastdate: this.invoice.lastdate,
-    tutionfee: this.invoice.tutionfee,
-    transportfee: this.invoice.transportfee,
-    termfee:this.invoice.termfee,
-    total: Number(this.invoice.tutionfee)+ Number(this.invoice.transportfee)+ Number(this.invoice.termfee),
-       
-      };
-  
-      this.accountService.create(data)
-        .subscribe({
-          next: (res) => {
-            console.log(res);
+        forkJoin(requests).subscribe({
+          next: () => {
             this.submitted = true;
-
-        
+            this.searchinvoices();
           },
-          error: (e) => {
-            console.error(e);
-            console.log(e.message);
-            alert(e.message);
+          error: error => {
+            console.error("Invoice creation failed:", error);
+            this.errorMessage = error.error?.message || "Unable to create invoices.";
           }
-          
         });
-  
-       }  
-       
-        
-      // this.reloadPage();
-    }
+      },
+      error: error => {
+        console.error("Student lookup failed:", error);
+        this.errorMessage = error.error?.message || "Unable to retrieve students.";
+      }
+    });
+  }
 
     removeAll(): void {
       this.accountService.deleteAll()

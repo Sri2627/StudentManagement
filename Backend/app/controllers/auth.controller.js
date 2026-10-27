@@ -2,115 +2,91 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+function publicSignupRoles() {
+  return ["user"];
+}
 
-exports.signup = (req, res) => {
-  const user = new User({
-   
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
-    fullname:  req.body.fullname,
-    admissionno:  req.body.admissionno,
-    mobile: req.body.mobile,
-    address: req.body.address,
-    section: req.body.section,
-    standard:req.body.standard,
-    subject: req.body.subject,
-    mysections: req.body.mysections,
-    profile: req.body.subject,
-    photourl: req.body.photourl,
-    signature: req.body.signature,
-  });
+const userFields = [
+  "username",
+  "email",
+  "fullname",
+  "admissionno",
+  "mobile",
+  "address",
+  "section",
+  "standard",
+  "subject",
+  "mysections",
+  "profile",
+  "photourl",
+  "signature",
+  "code"
+];
 
-  user.save((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
+function getUserData(body) {
+  return userFields.reduce((user, field) => {
+    if (body[field] !== undefined) {
+      user[field] = body[field];
+    }
+    return user;
+  }, {});
+}
+
+async function createUser(req, res, roleNames) {
+  try {
+    const roles = await Role.find({ name: { $in: roleNames } });
+    if (roles.length !== roleNames.length) {
+      return res.status(400).send({ message: "One or more roles are invalid." });
     }
 
-    if (req.body.roles) {
-      Role.find(
-        {
-          name: { $in: req.body.roles }
-        },
-        (err, roles) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
+    const userData = getUserData(req.body);
+    userData.password = bcrypt.hashSync(req.body.password, 10);
+    userData.roles = roles.map(role => role._id);
 
-          user.roles = roles.map(role => role._id);
-          user.save(err => {
-            if (err) {
-              res.status(500).send({ message: err });
-              return;
-            }
+    await User.create(userData);
+    return res.status(201).send({ message: "User was registered successfully!" });
+  } catch (err) {
+    console.error("User registration failed:", err);
+    return res.status(500).send({ message: "Unable to register user." });
+  }
+}
 
-            res.send({ message: "User was registered successfully!" });
-          });
-        }
-      );
-    } else {
-      Role.findOne({ name: "user" }, (err, role) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
+exports.signup = (req, res) => createUser(req, res, publicSignupRoles());
 
-        user.roles = [role._id];
-        user.save(err => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-
-          res.send({ message: "User was registered successfully!" });
-        });
-      });
-    }
-  });
-};
+exports.provision = (req, res) => createUser(req, res, req.body.roles);
 
 exports.signin = (req, res) => {
-  User.findOne({
-    username: req.body.username
-  })
+  const { username, password } = req.body;
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res.status(400).send({ message: "Username and password are required." });
+  }
+
+  User.findOne({ username: username.trim() })
+    .select("+password")
     .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
-        res.status(500).send({ message: err });
-        return;
+        return res.status(500).send({ message: "Unable to sign in." });
       }
-
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
-      }
-
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
-
-      if (!passwordIsValid) {
+      if (!user || !bcrypt.compareSync(password, user.password)) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!"
+          message: "Invalid username or password."
         });
       }
 
-      var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400 // 24 hours
+      const token = jwt.sign({ id: user.id }, config.secret, {
+        algorithm: "HS256",
+        expiresIn: 86400
       });
+      const authorities = (user.roles || []).map(
+        role => "ROLE_" + role.name.toUpperCase()
+      );
 
-      var authorities = [];
-
-      for (let i = 0; i < user.roles.length; i++) {
-        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
-      }
-      res.status(200).send({
+      return res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
@@ -119,3 +95,5 @@ exports.signin = (req, res) => {
       });
     });
 };
+
+exports.publicSignupRoles = publicSignupRoles;

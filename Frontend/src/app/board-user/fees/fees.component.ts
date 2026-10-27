@@ -9,6 +9,7 @@ import { PaymentService } from 'src/app/_services/pay.service';
 import { RazorService } from 'src/app/_services/razor.service';
 import { StudentService } from 'src/app/_services/student.service';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-fees',
@@ -105,16 +106,16 @@ export class FeesComponent implements OnInit {
   
 
 
-payrazor(invoiceid :any, orderid :any){
+payrazor(invoiceid :any, order:any){
 
  const options = {
-    "key": "rzp_test_GCM7vvTycC6ic7", // Enter the Key ID generated from the Dashboard
-    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "key": environment.razorpayKeyId,
+    "amount": order.amount,
     "currency": "INR",
-    "name": "XR GURU",
-    "description": "xrguru Transaction",
-    "image": "https://www.xrguru.com/favicon.ico",
-    "order_id": orderid, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "name": "Edu Whale",
+    "description": "Edu Whale Transaction",
+    "image": `${window.location.origin}/favicon.ico`,
+    "order_id": order.id,
     "handler": this.paymentCapture.bind(this),
     
     
@@ -132,7 +133,7 @@ payrazor(invoiceid :any, orderid :any){
         "contact": "+91"+ this.phone,
     },
     "notes": {
-        "address": "XR GURU Corporate Office"
+        "address": "Edu Whale Corporate Office"
     },
     "theme": {
         "color": "#3399cc"
@@ -148,23 +149,32 @@ payrazor(invoiceid :any, orderid :any){
 }
 
 paymentCapture(response :any) {
- 
-
-  this.paymentId = response.razorpay_payment_id;
-   
-  this.updateinvoice(this.paymentId);
+  this.razorService.verify({
+    invoiceId: this.currentInvoiceid,
+    razorpay_payment_id: response.razorpay_payment_id,
+    razorpay_order_id: response.razorpay_order_id,
+    razorpay_signature: response.razorpay_signature
+  }).subscribe({
+    next: () => {
+      alert("Payment verified and invoice updated.");
+      this.getmyinvoices(this.currentUser.id);
+    },
+    error: error => {
+      console.error("Payment verification failed:", error);
+      alert(error.error?.message || "Payment could not be verified.");
+    }
+  });
 }
 
 
 
-createOrder( invoiceid:any, amount :any): void {
-  debugger   
+createOrder(invoiceid: any): void {
+  if (!environment.razorpayKeyId) {
+    alert("Online payments are not configured.");
+    return;
+  }
   const data = {
-    amount: amount,
-    currency: "INR",
-    receipt : invoiceid,
-    partial_payment :"true",
-    
+    receipt: invoiceid
   };
   this.currentInvoiceid = invoiceid;
 
@@ -173,13 +183,8 @@ createOrder( invoiceid:any, amount :any): void {
       next: (res) => {
         console.log(res);
         this.currentorder = res;
-        this.orderid = this.currentorder.id
-
-        this.payrazor(invoiceid, this.orderid);
-        console.log(res);
-        console.log(this.orderid);
-        alert(this.orderid);
-        
+        this.orderid = this.currentorder.id;
+        this.payrazor(invoiceid, this.currentorder);
    
 
 
@@ -192,27 +197,6 @@ createOrder( invoiceid:any, amount :any): void {
  
      
    
-}
-
-
-
-updateinvoice (mypaymentid:any){
- debugger
-  const data = {
-       
-    ispaid: true,
-    paymentid: mypaymentid,
-    
-  };
-
-  this.accountService.update(this.currentInvoiceid, data)
-  .subscribe({
-    next: (res) => {
-      console.log(res);
-      alert("Invoice succesfully updated");
-    },
-    error: (e) => console.error(e)
-  });
 }
 
 
@@ -332,7 +316,7 @@ updateinvoice (mypaymentid:any){
 
 
     paymentHandler.open({
-      name: "XRGURU",
+      name: "Edu Whale",
       description: feeformat,
       amount: amount * 100,
       email: this.currentUser.email

@@ -12,27 +12,18 @@ export class RoleGuard implements CanActivate {
   constructor(private tokenStorageService: TokenStorageService,  public router: Router) { }
   
  
-  canActivate()
-    {
-      this.roles = this.tokenStorageService.getUser().roles;
- 
-
-      if (!this.isLoggedIn) {
-
-        if (this.roles[0] == "ROLE_ADMIN")  {
-        
-          return true;
-         // this.router.navigate(['/admin']);
-        }
-       
-     //   alert("You are not admin");
-        this.router.navigate(['Unauthorized']);
-        return false;
-        
-
-      }
-      
+  canActivate(): boolean {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.roles = this.tokenStorageService.getUser().roles || [];
+    if (!this.isLoggedIn) {
+      this.router.navigate(['login']);
+      return false;
+    }
+    if (!this.roles.includes("ROLE_ADMIN")) {
+      this.router.navigate(['Unauthorized']);
+      return false;
+    }
     return true;
-  } 
+  }
   
 }

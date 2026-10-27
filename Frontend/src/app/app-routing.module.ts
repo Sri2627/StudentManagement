@@ -63,7 +63,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile/:id', component: StudentprofileComponent },
+  { path: 'profile/:id', component: StudentprofileComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]  },
   { path: 'user', component: BoardUserComponent,canActivate: [SroleGuard]  },
   { path: 'smessage', component: SmessagesComponent,canActivate: [SroleGuard]  },

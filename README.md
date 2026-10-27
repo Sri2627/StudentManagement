@@ -27,7 +27,14 @@ npm install
 node server.js
 ```
 
-The API defaults to port `8080`. Configure valid MongoDB connection details and payment credentials before starting the server. Do not commit credentials or production secrets to source control.
+The API defaults to port `8080`. Before starting it, copy `Backend/.env.example`
+to `Backend/.env` and configure `MONGODB_URI`, `JWT_SECRET` (at least 32
+characters), `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, and the trusted
+`CORS_ORIGINS`. Do not commit `.env` files or production secrets.
+
+Public registration creates student accounts only. Creating accounts with
+other roles is an administrator-only operation. The file server also needs the
+MongoDB and JWT environment variables.
 
 ### Frontend
 
@@ -41,26 +48,33 @@ The frontend's API URLs and the backend's CORS origin must be configured to matc
 
 ## Tests
 
-Run the Angular test suite from `Frontend/` with:
+Run the frontend build and test suite from `Frontend/` with:
+
+```powershell
+npm run build
+npm test
+```
+
+Run the backend regression tests from `Backend/` with:
 
 ```powershell
 npm test
 ```
 
-The backend currently has no test suite configured; its `npm test` script is a placeholder.
-
 ## Security notes
 
-The current implementation needs security work before it is suitable for production:
+The API requires JWT authentication for protected routes and applies role
+authorization on the server. Student signup cannot select a privileged role;
+account provisioning and broad student/result access are restricted. Password
+hashes are excluded from ordinary user queries, profile updates use an
+allowlist, and payment orders are based on stored invoice totals and verified
+server-side before invoices are marked paid.
 
-- Public signup accepts requested roles. It must not allow users to assign themselves administrator or other privileged roles.
-- Several user listing, retrieval, update, password-change, and delete endpoints do not enforce authentication and authorization on the server.
-- Payment order creation accepts a client-supplied amount. The server must validate prices and payment results before considering an order paid.
-- JWT and payment credentials must be supplied through protected environment configuration. Rotate any credentials that have been committed or otherwise exposed.
-- User API responses should not expose password hashes, and update endpoints should allow only explicitly approved fields.
-- Some role-based queries depend on hard-coded database role IDs; use role names or another stable mechanism instead.
-
-Frontend route guards are not a substitute for backend authorization. Apply and verify access controls on every protected API endpoint.
+Frontend route guards are a usability feature, not a security boundary. Review
+and test API permissions whenever routes or data workflows change. Rotate any
+credentials that have been committed or otherwise exposed, and do not treat
+this application as production-ready without a deployment-specific security
+review.
 
 ## Screenshots
 

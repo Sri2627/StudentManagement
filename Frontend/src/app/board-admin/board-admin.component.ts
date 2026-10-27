@@ -7,10 +7,11 @@ import { UserService } from '../_services/user.service';
 import { NgAnalyzeModulesHost, ThisReceiver } from '@angular/compiler';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CalendarOptions, getEventClassNames } from '@fullcalendar/angular';
+import { CalendarOptions } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
 import { EVENT } from 'src/app/models/event.model';
 import { EventService } from 'src/app/_services/event.service';
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { TeacherService } from '../_services/teacher.service';
 import { StudentService } from '../_services/student.service';
 import { SubjectService } from '../_services/subject.service';
@@ -32,19 +33,20 @@ import { ResultsService } from '../_services/results.service';
 export class BoardAdminComponent implements OnInit {
  
  
-  Events: EVENT[] = [];
   calendarOptions: CalendarOptions = {
     headerToolbar: {
-      left: 'prev,next today',
+      left: 'prev,next',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      right: 'today'
     },
     initialView: 'dayGridMonth',
+    plugins: [interactionPlugin],
     weekends: true,
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true
+    editable: false,
+    selectable: false,
+    dayMaxEvents: true,
+    height: 'auto',
+    events: []
     
   };
 
@@ -59,7 +61,6 @@ export class BoardAdminComponent implements OnInit {
   fileInfos?: Observable<any>;
   searchterm = "";
   currenteventdata: any;
-  liveeventdata:any;
 
   event: EVENT = {
     
@@ -73,7 +74,6 @@ export class BoardAdminComponent implements OnInit {
   
   };
   el: any;
-  noevents!: boolean;
   studentData: any;
   teacherData: any;
   subjectData: any;
@@ -117,7 +117,6 @@ export class BoardAdminComponent implements OnInit {
 
   constructor(private userService: UserService, 
        private eventservice :EventService,
-       private httpClient: HttpClient,
        private teacherservice: TeacherService,
        private studnetservice: StudentService,
        private subjectservice :ContentService,
@@ -130,14 +129,6 @@ export class BoardAdminComponent implements OnInit {
  
 
     private authService: AuthService, private tokenStorage: TokenStorageService, public router: Router,  public  api: ApiService ) { }
-    onDateClick(res: any) {
-      //alert('Clicked on date : ' + res.dateStr);
-      const date = res.dateStr;
-      //alert(date);
-      this.getEvent(date);
-   
-    }
- 
   ngOnInit(): void {
  
     this.currentUser = this.tokenStorage.getUser();
@@ -151,25 +142,6 @@ export class BoardAdminComponent implements OnInit {
     this.retrieveSections();
     this.retriveReuslts();
     this.retrivetotalReuslts();
-
-    setTimeout(() => {
-      return this.httpClient
-        .get('http://localhost:8080/api/events')
-        .subscribe((res: any) => {
-          this.Events.push(res);
-          console.log(this.Events);
-        });
-    }, 2200);
-    setTimeout(() => {
-      this.calendarOptions = {
-        initialView: 'dayGridMonth',
-        dateClick: this.onDateClick.bind(this),
-       // events: this.Events,
-        events: this.currenteventdata,
-      };
-    }, 2500);   
-   
-
 
   }
   settitle(title:any){
@@ -489,45 +461,26 @@ debugger
 
  
  
-  retrieveEvents(): void {
+   retrieveEvents(): void {
     
-    this.eventservice.getAll()
-      .subscribe({
-        next: (data) => {
+     this.eventservice.getAll()
+       .subscribe({
+         next: (data) => {
 
-          this.currenteventdata = data;
-         
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
-  }
- 
-  getEvent ( date : any): void {
-    this.eventservice.findBydate(date)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.liveeventdata = res;
-          if(this.liveeventdata.length == 0){
-            this.noevents = true;
-
-          }
-          else{
-
-            this.noevents = false;
-          }
-
-
-        },
-        error: (e) =>{
-  
-          console.error(e);
-          alert(e.message);
-        }
-         
-      });
-  }
+           this.currenteventdata = data;
+           this.calendarOptions = {
+             ...this.calendarOptions,
+             events: data.map((event) => ({
+               id: event.id,
+               title: event.title || 'School event',
+               start: event.date,
+               extendedProps: { description: event.description }
+             }))
+           };
+         },
+         error: (e) => console.error(e)
+       });
+   }
 
 
   retrieveTeachers(){

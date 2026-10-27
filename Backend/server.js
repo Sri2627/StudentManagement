@@ -1,8 +1,9 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const express = require("express");
 const cors = require("cors");
-const dbConfig = require("./app/config/db.config");
+const bootstrapAdmin = require("./app/bootstrapAdmin");
 
 const app = express();
 
@@ -10,16 +11,19 @@ function requiredEnv(name) {
   const value = process.env[name];
 
   if (!value) {
+    if (name === "MONGODB_URI") {
+      throw new Error(
+        "Missing MONGODB_URI. Copy Backend/.env.example to Backend/.env, " +
+        "replace the MongoDB URI with your private connection string, and restart."
+      );
+    }
     throw new Error(`Missing required environment variable: ${name}`);
   }
 
   return value;
 }
 
-const mongoUri = dbConfig.url;
-if (!mongoUri) {
-  throw new Error("Missing required environment variable: MONGODB_URI");
-}
+const mongoUri = requiredEnv("MONGODB_URI");
 const jwtSecret = requiredEnv("JWT_SECRET");
 if (jwtSecret.length < 32) {
   throw new Error("JWT_SECRET must be at least 32 characters long");
@@ -28,7 +32,8 @@ requiredEnv("RAZORPAY_KEY_ID");
 requiredEnv("RAZORPAY_KEY_SECRET");
 
 const db = require("./app/models");
-const allowedOrigins = (process.env.CORS_ORIGINS || "http://localhost:3200")
+const allowedOrigins = (process.env.CORS_ORIGINS ||
+  "http://localhost:4200,http://localhost:3200")
   .split(",")
   .map(origin => origin.trim())
   .filter(Boolean);
@@ -38,10 +43,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to our XRapplication." });
+  res.json({ message: "Welcome to Edu Whale." });
 });
 
 require("./app/routes/auth.routes")(app);
+const authJwt = require("./app/middlewares/authJwt");
+app.use("/api", authJwt.verifyToken, authJwt.authorizeApiRequest);
 require("./app/routes/user.routes")(app);
 require("./app/routes/turorial.routes")(app);
 require("./app/routes/asmt.routes")(app);
@@ -81,6 +88,17 @@ async function startServer() {
     console.log("Successfully connected to MongoDB.");
 
     await seedRoles();
+
+    const adminCreated = await bootstrapAdmin({
+      User: db.user,
+      Role: db.role,
+      username: process.env.BOOTSTRAP_ADMIN_USERNAME,
+      password: process.env.BOOTSTRAP_ADMIN_PASSWORD,
+      email: process.env.BOOTSTRAP_ADMIN_EMAIL
+    });
+    if (adminCreated) {
+      console.log("Bootstrap administrator account created.");
+    }
 
     const port = process.env.PORT || 8080;
     const server = app.listen(port, () => {

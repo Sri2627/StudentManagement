@@ -14,6 +14,7 @@ module.exports = mongoose => {
         total: String,
         ispaid: Boolean,
         paymentid: String,
+        paymentOrderId: String,
       },
       { timestamps: true }
     );
@@ -31,4 +32,3 @@ module.exports = mongoose => {
 
   
  
-

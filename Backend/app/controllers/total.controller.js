@@ -142,21 +142,27 @@ exports.getstudentresult = (req, res) => {
 };
 
 exports.getstudentresultbyid = (req, res) => {
-  const title = req.query.title;
-  console.log(title);
-  TRESULT.find( { studentid: { $eq: title } } )
-  
+  const db = require("../models");
+  db.user.findById(req.userId)
+    .select("admissionno")
+    .exec((err, user) => {
+      if (err) {
+        return res.status(500).send({ message: "Unable to retrieve student results." });
+      }
+      if (!user) {
+        return res.status(404).send({ message: "Student not found." });
+      }
 
-    .then(data => {
-      res.send(data);
-      console.log(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
+      const studentIds = [String(req.userId)];
+      if (user.admissionno !== undefined && user.admissionno !== null) {
+        studentIds.push(String(user.admissionno));
+      }
+
+      TRESULT.find({ studentid: { $in: studentIds } })
+        .then(data => res.send(data))
+        .catch(() => {
+          res.status(500).send({ message: "Unable to retrieve student results." });
+        });
     });
 };
 

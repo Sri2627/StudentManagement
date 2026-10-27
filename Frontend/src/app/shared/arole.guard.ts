@@ -13,28 +13,19 @@ export class AroleGuard implements CanActivate {
     constructor(private tokenStorageService: TokenStorageService,  public router: Router) { }
     
    
-    canActivate()
-      {
-        this.roles = this.tokenStorageService.getUser().roles;
-   
-  
-        if (!this.isLoggedIn) {
-  
-          if (this.roles[0] == "ROLE_ACCOUNTS")  {
-          
-            return true;
-            this.router.navigate(['/accounts']);
-          }
-         
-           
-          this.router.navigate(['Unauthorized']);
-          return false;
-          
-  
-        }
-        
+    canActivate(): boolean {
+      this.isLoggedIn = !!this.tokenStorageService.getToken();
+      this.roles = this.tokenStorageService.getUser().roles || [];
+      if (!this.isLoggedIn) {
+        this.router.navigate(['login']);
+        return false;
+      }
+      if (!this.roles.includes("ROLE_ACCOUNTS")) {
+        this.router.navigate(['Unauthorized']);
+        return false;
+      }
       return true;
-    } 
+    }
     
   }
   

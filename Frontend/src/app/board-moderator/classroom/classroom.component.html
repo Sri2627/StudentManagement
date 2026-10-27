@@ -34,7 +34,7 @@
               </button> &nbsp;
 
               <button  class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fas fa-plus"></i>Add Student
+                <i class="fas fa-plus"></i>Student accounts are managed by administrators
               </button>
                    </div>
               </div>
@@ -185,7 +185,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
@@ -386,7 +386,7 @@
              
     
         <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-          Signup failed!<br />{{ errorMessage }}
+          {{ errorMessage }}
         </div>
       
   

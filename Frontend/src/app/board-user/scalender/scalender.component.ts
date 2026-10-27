@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { CalendarOptions, getEventClassNames } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
 import { EVENT } from 'src/app/models/event.model';
 import { EventService } from 'src/app/_services/event.service';
 import { Router } from '@angular/router';
@@ -22,6 +23,7 @@ export class ScalenderComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'dayGridMonth',
+    plugins: [interactionPlugin],
     weekends: true,
     editable: true,
     selectable: true,
@@ -78,6 +80,7 @@ export class ScalenderComponent implements OnInit {
     setTimeout(() => {
       this.calendarOptions = {
         initialView: 'dayGridMonth',
+        plugins: [interactionPlugin],
         dateClick: this.onDateClick.bind(this),
        // events: this.Events,
         events: this.currenteventdata,

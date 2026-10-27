@@ -10,7 +10,7 @@
   <nav class="nav">
       <div>
         
-      <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">XR GURU</span> </a>
+      <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Edu Whale</span> </a>
           <div class="nav_list" *ngIf="showAdminBoard">
             
             
@@ -41,13 +41,13 @@
      
 
 
-          <div class="dashboard-main-wrapper">
+          <div class="dashboard-main-wrapper" [class.dashboard-authenticated]="isLoggedIn">
             <!-- ============================================================== -->
             <!-- navbar -->
             <!-- ============================================================== -->
             <div class="dashboard-header" *ngIf="isLoggedIn">
                 <nav class="navbar navbar-expand-lg  customgradient fixed-top" >
-                    <a class="navbar-brand" href="index.html"> <h2 style="color: #FFF !important;">  XR GURU</h2> </a>
+                    <a class="navbar-brand" href="index.html"> <h2 style="color: #FFF !important;">  Edu Whale</h2> </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -152,6 +152,10 @@
             <!-- ============================================================== -->
             <div class="nav-left-sidebar sidebar-dark" *ngIf="isLoggedIn">
                 <div class="menu-list">
+                    <div class="app-brand">
+                        <span class="app-brand-mark">E</span>
+                        <span>Edu Whale</span>
+                    </div>
                     <nav class="navbar navbar-expand-lg navbar-light">
                         
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
@@ -477,7 +481,9 @@
             <!-- ============================================================== -->
             <!-- wrapper  -->
             <!-- ============================================================== -->
+            <main class="dashboard-app-content">
             <router-outlet></router-outlet>
+            </main>
 
             <!-- ============================================================== -->
             <!-- end wrapper  -->
@@ -510,5 +516,3 @@
                 
         
   
-
-

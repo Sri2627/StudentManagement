@@ -12,27 +12,18 @@ export class IroleGuard implements CanActivate {
   constructor(private tokenStorageService: TokenStorageService,  public router: Router) { }
   
  
-  canActivate()
-    {
-      this.roles = this.tokenStorageService.getUser().roles;
- 
-
-      if (!this.isLoggedIn) {
-
-        if (this.roles[0] == "ROLE_INSTITUTION")  {
-        
-          return true;
-          this.router.navigate(['/Institute']);
-        }
-       
-         
-        this.router.navigate(['Unauthorized']);
-        return false;
-        
-
-      }
-      
+  canActivate(): boolean {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.roles = this.tokenStorageService.getUser().roles || [];
+    if (!this.isLoggedIn) {
+      this.router.navigate(['login']);
+      return false;
+    }
+    if (!this.roles.includes("ROLE_INSTITUTION")) {
+      this.router.navigate(['Unauthorized']);
+      return false;
+    }
     return true;
-  } 
+  }
   
 }

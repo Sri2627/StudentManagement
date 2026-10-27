@@ -61,15 +61,14 @@
   
     <div class="card">
       <div class="card-header">
-        Upload csv to read
+        Upload student CSV
       </div>
       <div class="card-body">
        
         <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" multiple (change)="uploadListener($event)"   accept="image/*,.csv"  /><br/>
        
        
-        <button   (click)=" Uploadstudents(csvRecordsArray,headerLength)" type ="button" class="btn btn-primary"
-           >Upload</button>
+        <button (click)="Uploadstudents(csvRecordsArray, headerLength)" type="button" class="btn btn-primary">Import accounts</button>
   
           <a href="javascript:;" *ngIf="records.length > 0" (click)="fileReset()" class="btn btn-primary">Reset </a>
 
@@ -86,7 +85,7 @@
    
   
     <div class="alert alert-warning" *ngIf="isSignUpFailed">
-      Signup failed!<br />{{ errorMessage }}
+      {{ errorMessage }}
     </div>
   <!-- <a href="javascript:;" *ngIf="records.length > 0" (click)="getJsonData()" class="btn btn-primary">Convert Json </a> -->
    

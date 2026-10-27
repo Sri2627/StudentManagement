@@ -209,20 +209,7 @@ export class CsvuploadComponent implements OnInit {
           csvRecord.photourl = curruntRecord[8].trim();
    
            csvArr.push(csvRecord);
-           this.authService.register(
-            csvRecord.username,
-            csvRecord.email,
-            csvRecord.password,
-            csvRecord.roles, 
-            csvRecord.fullname,
-            csvRecord.mobile,
-            csvRecord.address,
-            csvRecord.standard,
-            csvRecord.section,
-            csvRecord.profile,
-            csvRecord.photourl,
-            csvRecord.admissionno,
-                    )
+           this.authService.provision(csvRecord)
            .subscribe({
              next: (res) => {
                console.log(res);

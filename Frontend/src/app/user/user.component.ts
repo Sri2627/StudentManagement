@@ -140,7 +140,20 @@ export class UserComponent implements OnInit {
   onSubmit(): void {
                      const { username, email, password, roles, fullname, mobile, address, standard, section, profile, photourl=this.resfileurl,admissionno = this.lastadmissionno } = this.form;
    
-    this.authService.register(username, email, password, roles, fullname, mobile, address, standard, section, profile,photourl,admissionno).subscribe({
+    this.authService.provision({
+      username,
+      email,
+      password,
+      roles,
+      fullname,
+      mobile,
+      address,
+      standard,
+      section,
+      profile,
+      photourl,
+      admissionno
+    }).subscribe({
       next: data => {
         console.log(data);
         this.isSuccessful = true;

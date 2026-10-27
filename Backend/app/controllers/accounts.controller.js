@@ -21,7 +21,6 @@ exports.create = (req, res) => {
     transportfee: req.body.transportfee,
     termfee: req.body.termfee,
     total: req.body.total,
-    paymentid:req.body.total,
     ispaid: req.body.ispaid ? req.body.ispaid : false,
 
   });
@@ -96,17 +95,12 @@ exports.getsectionexams = (req, res) => {
   
 
 exports.getstudentinvoices = (req, res) => {
-  const customerid = req.query.customerid;
-  
-  console.log(customerid);
+  const customerid = req.userRoles.some(role => ["admin", "accounts"].includes(role))
+    ? req.query.customerid
+    : req.userId;
 
-  ACCOUNTS.find( { studentid: { $eq: customerid } } )
-
-
-    .then(data => {
-      res.send(data);
-      console.log(data);
-    })
+  ACCOUNTS.find({ studentid: customerid })
+    .then(data => res.send(data))
     .catch(err => {
       res.status(500).send({
         

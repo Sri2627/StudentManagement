@@ -44,7 +44,9 @@ exports.create = (req, res) => {
  
 
 exports.getmyresults = (req, res) => {
-  const customerid = req.query.customerid;
+  const customerid = req.userRoles.some(role => ["admin", "moderator"].includes(role))
+    ? req.query.customerid
+    : req.userId;
    
 
   RESULT.find( { customerid: { $eq: customerid } } )
@@ -64,7 +66,9 @@ exports.getmyresults = (req, res) => {
 };
 
 exports.getstudentresults = (req, res) => {
-  const studentid = req.query.studentid;
+  const studentid = req.userRoles.some(role => ["admin", "moderator"].includes(role))
+    ? req.query.studentid
+    : req.userId;
   const title = req.query.title;
 
 
@@ -85,7 +89,9 @@ exports.getstudentresults = (req, res) => {
 };
 
 exports.getresultsbystudentid= (req, res) => {
-  const studentid = req.query.studentid;
+  const studentid = req.userRoles.some(role => ["admin", "moderator"].includes(role))
+    ? req.query.studentid
+    : req.userId;
  
 
 
@@ -138,7 +144,9 @@ exports.findAll = (req, res) => {
 
 
 exports.getsectionexams = (req, res) => {
-    const customerid = req.query.customerid;
+  const customerid = req.userRoles.some(role => ["admin", "moderator"].includes(role))
+    ? req.query.customerid
+    : req.userId;
     
     console.log(customerid);
   
@@ -188,7 +196,9 @@ exports.getsectionexams = (req, res) => {
 
 exports.getstudentresult = (req, res) => {
   const examid = req.query.examid;
-  const studentid = req.query.studentid;
+  const studentid = req.userRoles.some(role => ["admin", "moderator"].includes(role))
+    ? req.query.studentid
+    : req.userId;
   console.log(examid);
   console.log(studentid);
   RESULT.findOne( { examid: { $eq: examid } , studentid: { $eq: studentid }} )
